@@ -1,7 +1,7 @@
 <template>
   <nav class="site-nav">
     <div class="site-nav-logo">
-      <a href="/blog">BLOG</a>
+      <a href="/blog">JunbX</a>
     </div>
     <div class="site-nav-links">
       <NuxtLink to="/blog" :class="{ active: $route.path === '/blog' }">文章</NuxtLink>
