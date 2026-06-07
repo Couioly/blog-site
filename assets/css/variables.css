@@ -1,0 +1,171 @@
+/* ===== Gwern-Style CSS Variables ===== */
+
+/* --- Light Mode (default) --- */
+:root {
+  --bg: #fff;
+  --text: #000;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --link: #333;
+  --link-hover: #888;
+  --link-visited: #666;
+  --border: #ccc;
+  --border-light: #ddd;
+  --border-strong: #888;
+  --code-bg: #fafafa;
+  --code-border: #c8c8c8;
+  --blockquote-bg: #f8f8f8;
+  --blockquote-border: #ccc;
+  --selection-bg: #333;
+  --selection-text: #fff;
+  --heading-border: #888;
+  --toc-bg: #f8f8f8;
+  --toc-border: #ccc;
+  --toc-hover-bg: #ececec;
+  --toc-hover-text: #000;
+  --toc-number: #909090;
+  --toc-number-hover: #313131;
+  --abstract-border: #bbb;
+  --footer-color: #888;
+  --toolbar-icon: #aaa;
+  --toolbar-icon-active: #000;
+  --search-bg: rgba(255, 255, 255, 0.95);
+  --search-border: #aaa;
+  --scrollbar-thumb: #ccc;
+  --scrollbar-thumb-hover: #999;
+  --scrollbar-track: #fafafa;
+  --year-divider: #000;
+  --admonition-note-border: #909090;
+  --admonition-note-bg: #d8d8d8;
+  --admonition-warning-border: #5a5a5a;
+  --admonition-warning-bg: #9a9a9a;
+  --admonition-warning-text: #fff;
+}
+
+/* --- Auto Dark Mode (system preference, unless explicit .light) --- */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --bg: #000;
+    --text: #fff;
+    --text-secondary: #b4b4b4;
+    --text-muted: #929292;
+    --link: #dcdcdc;
+    --link-hover: #999;
+    --link-visited: #b4b4b4;
+    --border: #5c5c5c;
+    --border-light: #494949;
+    --border-strong: #999;
+    --code-bg: #1d1d1d;
+    --code-border: #606060;
+    --blockquote-bg: #212121;
+    --blockquote-border: #5c5c5c;
+    --selection-bg: #dcdcdc;
+    --selection-text: #000;
+    --heading-border: #999;
+    --toc-bg: #212121;
+    --toc-border: #5c5c5c;
+    --toc-hover-bg: #363636;
+    --toc-hover-text: #fff;
+    --toc-number: #929292;
+    --toc-number-hover: #ddd;
+    --abstract-border: #6c6c6c;
+    --footer-color: #999;
+    --toolbar-icon: #999;
+    --toolbar-icon-active: #fff;
+    --search-bg: rgba(0, 0, 0, 0.95);
+    --search-border: #5c5c5c;
+    --scrollbar-thumb: #5c5c5c;
+    --scrollbar-thumb-hover: #8b8b8b;
+    --scrollbar-track: #000;
+    --year-divider: #fff;
+    --admonition-note-border: #909090;
+    --admonition-note-bg: #363636;
+    --admonition-warning-border: #7c7c7c;
+    --admonition-warning-bg: #5a5a5a;
+    --admonition-warning-text: #fff;
+  }
+}
+
+/* --- Explicit Dark override --- */
+:root.dark {
+  --bg: #000;
+  --text: #fff;
+  --text-secondary: #b4b4b4;
+  --text-muted: #929292;
+  --link: #dcdcdc;
+  --link-hover: #999;
+  --link-visited: #b4b4b4;
+  --border: #5c5c5c;
+  --border-light: #494949;
+  --border-strong: #999;
+  --code-bg: #1d1d1d;
+  --code-border: #606060;
+  --blockquote-bg: #212121;
+  --blockquote-border: #5c5c5c;
+  --selection-bg: #dcdcdc;
+  --selection-text: #000;
+  --heading-border: #999;
+  --toc-bg: #212121;
+  --toc-border: #5c5c5c;
+  --toc-hover-bg: #363636;
+  --toc-hover-text: #fff;
+  --toc-number: #929292;
+  --toc-number-hover: #ddd;
+  --abstract-border: #6c6c6c;
+  --footer-color: #999;
+  --toolbar-icon: #999;
+  --toolbar-icon-active: #fff;
+  --search-bg: rgba(0, 0, 0, 0.95);
+  --search-border: #5c5c5c;
+  --scrollbar-thumb: #5c5c5c;
+  --scrollbar-thumb-hover: #8b8b8b;
+  --scrollbar-track: #000;
+  --year-divider: #fff;
+  --admonition-note-border: #909090;
+  --admonition-note-bg: #363636;
+  --admonition-warning-border: #7c7c7c;
+  --admonition-warning-bg: #5a5a5a;
+  --admonition-warning-text: #fff;
+}
+
+/* --- Explicit Light override --- */
+:root.light {
+  --bg: #fff;
+  --text: #000;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --link: #333;
+  --link-hover: #888;
+  --link-visited: #666;
+  --border: #ccc;
+  --border-light: #ddd;
+  --border-strong: #888;
+  --code-bg: #fafafa;
+  --code-border: #c8c8c8;
+  --blockquote-bg: #f8f8f8;
+  --blockquote-border: #ccc;
+  --selection-bg: #333;
+  --selection-text: #fff;
+  --heading-border: #888;
+  --toc-bg: #f8f8f8;
+  --toc-border: #ccc;
+  --toc-hover-bg: #ececec;
+  --toc-hover-text: #000;
+  --toc-number: #909090;
+  --toc-number-hover: #313131;
+  --abstract-border: #bbb;
+  --footer-color: #888;
+  --toolbar-icon: #aaa;
+  --toolbar-icon-active: #000;
+  --search-bg: rgba(255, 255, 255, 0.95);
+  --search-border: #aaa;
+  --scrollbar-thumb: #ccc;
+  --scrollbar-thumb-hover: #999;
+  --scrollbar-track: #fafafa;
+  --year-divider: #000;
+  --admonition-note-border: #909090;
+  --admonition-note-bg: #d8d8d8;
+  --admonition-warning-border: #5a5a5a;
+  --admonition-warning-bg: #9a9a9a;
+  --admonition-warning-text: #fff;
+}

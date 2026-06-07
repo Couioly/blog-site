@@ -1,0 +1,202 @@
+/* ===== Typography ===== */
+
+/* Chinese + Latin font stack */
+body {
+  font-family:
+    'Noto Serif SC', 'Source Han Serif SC', 'STSong',
+    'Noto Serif', 'Latin Modern Roman', 'STIX Two Text',
+    'Georgia', 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Monospace */
+code, pre, kbd, samp {
+  font-family:
+    'Cascadia Code', 'Fira Code', 'JetBrains Mono',
+    'Source Code Pro', 'Consolas', 'Monaco',
+    'Courier New', monospace;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family:
+    'Noto Sans SC', 'Source Han Sans SC',
+    'Noto Sans', 'Helvetica Neue', 'Arial', sans-serif;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 1.5em 0 0.5em;
+}
+
+h1 {
+  font-size: 1.75rem;
+  border-bottom: 1px solid var(--heading-border);
+  padding-bottom: 0.35em;
+  margin-top: 2em;
+}
+
+h2 {
+  font-size: 1.4rem;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 0.25em;
+}
+
+h3 { font-size: 1.2rem; }
+
+/* Section heading links */
+h1 a, h2 a, h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+h1 a:hover::after, h2 a:hover::after {
+  content: ' §';
+  font-size: 0.8em;
+  color: var(--text-muted);
+}
+
+/* Paragraphs */
+p {
+  margin: 0 0 1em;
+}
+
+/* Links */
+a {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--border);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+a:hover {
+  color: var(--link-hover);
+  border-bottom-color: var(--link-hover);
+}
+a:visited {
+  color: var(--link-visited);
+}
+
+/* Lists */
+ul, ol {
+  padding-left: 1.5em;
+  margin: 0 0 1em;
+}
+li {
+  margin-bottom: 0.25em;
+}
+
+/* Blockquotes */
+blockquote {
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  border-left: 3px solid var(--blockquote-border);
+  background: var(--blockquote-bg);
+}
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Inline code */
+code {
+  padding: 0.15em 0.35em;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+/* Code blocks */
+pre {
+  padding: 1em;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  overflow-x: auto;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+pre code {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5em auto;
+  border-radius: 4px;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.92em;
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.6em 0.85em;
+  text-align: left;
+}
+
+th {
+  background: var(--code-bg);
+  font-weight: 600;
+  font-family: 'Noto Sans SC', 'Helvetica Neue', sans-serif;
+}
+
+tr:nth-child(even) td {
+  background: var(--blockquote-bg);
+}
+
+/* Horizontal rules */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2em 0;
+}
+
+/* Selection */
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Admonitions (callouts) */
+.admonition {
+  margin: 1.5em 0;
+  padding: 0.75em 1em;
+  border-left: 4px solid var(--admonition-note-border);
+  background: var(--admonition-note-bg);
+}
+.admonition-title {
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+.admonition.warning {
+  border-left-color: var(--admonition-warning-border);
+  background: var(--admonition-warning-bg);
+  color: var(--admonition-warning-text);
+}
