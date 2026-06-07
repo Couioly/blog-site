@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi generate",
+    "generate": "nuxi generate",
     "preview": "nuxi preview"
   },
   "devDependencies": {
