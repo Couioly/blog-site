@@ -5,8 +5,6 @@ description: "从零开始的ClawBot接入教程：OpenClaw安装配置、DeepSe
 tags: ["ClawBot", "OpenClaw", "DeepSeek", "微信", "智能体"]
 ---
 
-# 0~1 ClawBot快速接入实战
-
 ### 前言：为什么我现在才尝试 OpenClaw
 
 这次对前几天的折腾做个总结，说实话，我对 AI 智能体一直很感兴趣，但之前 OpenClaw 火的时候，我根本不敢碰。
