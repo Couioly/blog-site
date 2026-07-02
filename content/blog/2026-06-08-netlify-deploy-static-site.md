@@ -5,8 +5,6 @@ description: "从零到一：使用Netlify部署静态网站，包括Git推送�
 tags: ["Netlify", "GitHub", "Git", "静态网站部署"]
 ---
 
-# Netlify 部署静态网站
-
 ## 一、部署前准备
 
 ### 1. 创建配置文件

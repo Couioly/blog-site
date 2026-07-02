@@ -1,18 +1,27 @@
 <template>
   <article>
-    <NuxtLink to="/blog" class="article-back">← 返回博客索引</NuxtLink>
+    <ReadingProgress />
 
     <header class="article-header">
       <h1>{{ post?.title || '文章' }}</h1>
-      <div class="article-meta">
-        <span v-if="post?.date">日期: {{ formattedDate }}</span>
-        <span v-if="tags.length">标签: {{ tags.join(', ') }}</span>
+      <div v-if="post?.date || tags.length" class="article-meta-row">
+        <span v-if="post?.date" class="meta-pill">{{ formattedDate }}</span>
+        <NuxtLink
+          v-for="tag in tags"
+          :key="tag"
+          :to="`/blog/tag/${tag}`"
+          class="meta-pill meta-pill-tag"
+        >{{ tag }}</NuxtLink>
       </div>
     </header>
 
     <div class="article-body">
       <ContentRenderer v-if="post" :value="post" />
-      <p v-else>文章未找到。</p>
+      <p v-else>文章未找到</p>
+    </div>
+
+    <div class="article-footer-nav">
+      <NuxtLink to="/blog" class="article-back">&larr; 返回博客</NuxtLink>
     </div>
   </article>
 </template>
@@ -39,5 +48,14 @@ const tags = computed(() => {
   const t = post.value?.tags
   if (!t) return []
   return Array.isArray(t) ? t : [t]
+})
+
+useSeoMeta({
+  title: () => post.value?.title || '文章',
+  ogTitle: () => post.value?.title || '文章',
+  description: () => (post.value?.description as string) || '',
+  ogDescription: () => (post.value?.description as string) || '',
+  ogType: 'article',
+  twitterCard: 'summary',
 })
 </script>

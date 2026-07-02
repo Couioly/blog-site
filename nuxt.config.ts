@@ -2,7 +2,11 @@ export default defineNuxtConfig({
   ssr: true,
   target: 'static',
 
-  modules: ['@nuxt/content'],
+  modules: ['@nuxt/content', '@nuxtjs/sitemap'],
+
+  site: {
+    url: 'https://junbx.cn',
+  },
 
   content: {
     build: {
@@ -11,7 +15,10 @@ export default defineNuxtConfig({
       },
     },
     highlight: {
-      theme: 'github-dark',
+      theme: {
+        default: 'github-light',
+        dark: 'github-dark',
+      },
     },
   },
 

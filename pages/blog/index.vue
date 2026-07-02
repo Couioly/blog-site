@@ -1,13 +1,5 @@
 <template>
   <article>
-    <header>
-      <h1>博客文章</h1>
-    </header>
-
-    <div class="abstract">
-      <p>这是我的个人博客，记录思考、学习笔记和随笔。文章按年份倒序排列。</p>
-    </div>
-
     <!-- Search -->
     <div class="search-container" style="margin-bottom: 2rem;">
       <input
@@ -24,14 +16,17 @@
     <!-- TOC + Content -->
     <div class="blog-index">
       <!-- Sidebar TOC -->
-      <BlogTOC :years="displayYears" />
+      <BlogTOC v-if="!query.trim()" :years="displayYears" />
 
       <!-- Post List -->
       <div class="blog-content">
         <!-- Search results -->
         <template v-if="query.trim()">
-          <section class="year-section">
-            <h1>搜索结果</h1>
+          <div v-if="searchResults.length === 0" class="empty-state">
+            <img src="/null.svg" alt="暂无结果" class="empty-illustration" />
+            <p>未找到匹配的文章</p>
+          </div>
+          <section v-else class="year-section">
             <ul class="post-list">
               <PostCard
                 v-for="post in searchResults"
@@ -44,6 +39,10 @@
 
         <!-- Normal year-grouped view -->
         <template v-else>
+          <div v-if="postGroups.length === 0" class="empty-state">
+            <img src="/null.svg" alt="暂无文章" class="empty-illustration" />
+            <p>暂无博客文章</p>
+          </div>
           <section
             v-for="group in postGroups"
             :id="`year-${group.year}`"
@@ -105,8 +104,16 @@
 <script setup lang="ts">
 import type { PostMeta, PostGroup } from '~/types/blog'
 
+useSeoMeta({
+  title: '博客文章',
+  description: '个人博客 - 记录思考与学习',
+  ogTitle: '博客文章',
+  ogDescription: '个人博客 - 记录思考与学习',
+  ogType: 'website',
+  twitterCard: 'summary',
+})
+
 const showFull = ref(false)
-const { query, results: searchResults } = useSearch(ref([]) as Ref<PostMeta[]>)
 
 // Fetch all posts
 const { data: posts } = await useAsyncData('blog-posts', () =>
@@ -152,6 +159,9 @@ const postGroups = computed<PostGroup[]>(() => {
 
 const displayYears = computed(() => postGroups.value.map((g) => g.year))
 
+// Search (with debounce)
+const { query, results: searchResults } = useSearch(postMetas)
+
 function formatDate(dateStr: string) {
   if (!dateStr) return ''
   const d = new Date(dateStr)
@@ -159,16 +169,4 @@ function formatDate(dateStr: string) {
   const dd = String(d.getDate()).padStart(2, '0')
   return `${mm}-${dd}`
 }
-
-// Wire up search
-watchEffect(() => {
-  ;(searchResults as any).value = query.value.trim()
-    ? postMetas.value.filter(
-        (p) =>
-          p.title.toLowerCase().includes(query.value.toLowerCase()) ||
-          (p.description &&
-            p.description.toLowerCase().includes(query.value.toLowerCase()))
-      )
-    : []
-})
 </script>
