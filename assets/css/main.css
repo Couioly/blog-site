@@ -55,8 +55,8 @@ body {
 }
 
 .site-nav-links a {
-  font-family: 'Noto Sans SC', 'Helvetica Neue', sans-serif;
-  font-size: 0.9rem;
+  font-family: "FZYaoTi", "方正姚体", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-size: 1.05rem;
   color: var(--text-muted);
   border-bottom: none;
   text-decoration: none;
@@ -178,6 +178,9 @@ body {
   text-decoration: none;
   border-radius: 3px;
   transition: all 0.15s ease;
+  font-family: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }
 
 .blog-toc a:hover {
@@ -190,13 +193,29 @@ body {
   margin-bottom: 2rem;
 }
 
-.year-section h1 {
+.year-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
   margin-top: 2.5rem;
-  font-size: 1.5rem;
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--heading-border);
 }
 
-.year-section h1:first-child {
+.year-header:first-child {
   margin-top: 0;
+}
+
+.year-header h1,
+.year-header h2 {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: 1.5rem;
+  font-family: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  text-align: right;
 }
 
 /* ---- Post List ---- */
@@ -213,12 +232,21 @@ body {
 .post-list li a {
   font-weight: 600;
   border-bottom: none;
+  transition: color 0.15s ease;
+}
+
+.post-list li:hover a {
+  color: #8b0000;
+  border-bottom: 1px dashed #8b0000;
 }
 
 .post-list li .post-date {
   color: var(--text-muted);
   font-size: 0.85rem;
   margin-left: 0.5em;
+  font-family: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }
 
 /* ---- Abstract / intro block ---- */
@@ -391,8 +419,21 @@ body {
   opacity: 0.6;
 }
 
+/* Post list icon */
+.post-list-icon {
+  display: inline;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin: 0 0.35em 0 0;
+  opacity: 0.55;
+  color: var(--text);
+}
+
 /* Invert illustration in dark mode */
-:root.dark .empty-illustration,
+:root.dark .empty-illustration {
+  filter: invert(0.85);
+}
 @media (prefers-color-scheme: dark) {
   :root:not(.light) .empty-illustration {
     filter: invert(0.85);

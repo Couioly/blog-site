@@ -3,8 +3,8 @@
     <div class="me-avatar">
       <img src="/img-me.png" alt="头像" />
     </div>
-    <h1 class="me-nickname">Couioly | 姜玖儿</h1>
-    <p class="me-bio">一个喜欢技术的人，喜欢分享知识的人</p>
+    <h1 class="me-nickname">姜玖儿</h1>
+    <p class="me-bio">喜欢前沿技术，热爱分享知识</p>
 
     <div class="me-social">
       <a href="https://gitee.com/Couioly" target="_blank" rel="noopener" title="Gitee">

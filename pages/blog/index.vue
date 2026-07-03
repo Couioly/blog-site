@@ -49,12 +49,14 @@
             :key="group.year"
             class="year-section"
           >
-            <h1>
-              <a :href="`#year-${group.year}`">{{ group.year }}</a>
-            </h1>
-            <p style="color: var(--text-muted); font-size: 0.85rem;">
-              {{ group.posts.length }} 篇文章
-            </p>
+            <div class="year-header">
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">
+                {{ group.posts.length }} 篇文章
+              </p>
+              <h1>
+                <a :href="`#year-${group.year}`">{{ group.year }}</a>
+              </h1>
+            </div>
             <ul class="post-list">
               <PostCard
                 v-for="post in group.posts"
@@ -81,9 +83,14 @@
               :key="'full-' + group.year"
               class="year-section"
             >
-              <h2>
-                <a :href="`#full-year-${group.year}`">{{ group.year }}</a>
-              </h2>
+              <div class="year-header">
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">
+                  {{ group.posts.length }} 篇文章
+                </p>
+                <h2>
+                  <a :href="`#full-year-${group.year}`">{{ group.year }}</a>
+                </h2>
+              </div>
               <div v-for="post in group.posts" :key="post.slug" style="margin-bottom: 1.5rem;">
                 <strong>
                   <NuxtLink :to="`/blog/${post.slug}`">{{ post.title }}</NuxtLink>

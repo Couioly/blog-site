@@ -1,6 +1,6 @@
 ---
 title: "PyQt5-认识 Qt Designer"
-date: "2025-07-17"
+date: "2025-08-17"
 description: "认识Qt Designer可视化界面设计工具，了解各区域功能与基本操作。"
 tags: ["Python", "PyQt5", "GUI"]
 ---

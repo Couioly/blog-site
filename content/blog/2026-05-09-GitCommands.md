@@ -5,7 +5,7 @@ description: "Git 实用指令集：本地文件永久忽略、团队远程推�
 tags: ["Git", "版本控制"]
 ---
 
-### 指令1：本地修改文件不提交到远程
+### 1 本地修改文件不提交到远程
 
 #### 场景说明
 
@@ -92,7 +92,7 @@ git update-index --no-skip-worktree 前端文件路径
 
 ---
 
-### 指令2：团队 Git 远程推送
+### 2 团队 Git 远程推送
 
 #### 场景说明
 
@@ -148,7 +148,7 @@ git push origin master   # 推送你的功能
 
 ---
 
-### 指令3：Connection was reset 解决方案
+### 3 Connection was reset 解决方案
 
 #### 错误截图
 
@@ -235,3 +235,55 @@ git remote set-url origin git@github.com:Couiolly/AIHeartCrisis.git
 ```bash
 git push origin master:后
 ```
+
+
+---
+
+### 4 推送文件太大导致出错
+
+#### 场景说明
+
+我在本地仓库中修改了一些文件，另外还添加了几个媒体文件，最大的一个MP4文件大小为 `52MB`，我现在要将它们推送至远程仓库，但是当我只需 push 指令后，它提示 fatal 信息
+
+**报错信息示例**
+
+```bash
+31245@HUAWEINotBook16 MINGW64 /d/CodeFile/AI_Code/claudedemo (master)
+$ git push origin master
+Enter passphrase for key '/c/Users/31245/.ssh/id_ed25519':
+Enumerating objects: 75, done.
+Counting objects: 100% (75/75), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (49/49), done.
+Read from remote host github.com: Connection reset by peer
+client_loop: send disconnect: Connection reset by peer
+fatal: sha1 file '<stdout>' write error: Broken pipe/s
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+```
+
+#### 问题原因
+
+`Connection reset by peer`、`Broken pipe` 是典型 **GitHub 网络连接超时 / 上传数据包过大被服务器强制断开** 导致的推送失败，常见两种场景：
+
+1. 网络访问 GitHub 不稳定，SSH 连接中途被重置
+2. 单次推送文件太多 / 单个文件过大，Git 默认缓冲区太小传输中断
+
+#### 解决方案
+
+**调大 Git 传输缓冲区（最常用有效）** 在当前终端执行这两行命令，增大单次上传缓存：
+
+```bash
+git config --global http.postBuffer 524288000
+git config --global https.postBuffer 524288000
+```
+
+设置完成后再次推送：
+
+```bash
+git push origin master
+```
+
+> 此处我直到自己有大文件，所以优先尝试的该方案，最终问题成功解决！
+
+

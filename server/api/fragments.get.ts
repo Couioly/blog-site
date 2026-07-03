@@ -17,8 +17,9 @@ export default defineEventHandler(async () => {
       // Filename format: YYYY-MM-DD-title
       const dateMatch = name.match(/^(\d{4}-\d{2}-\d{2})-(.+)$/)
       const date = dateMatch ? dateMatch[1] : ''
+      const year = date ? parseInt(date.slice(0, 4)) : 0
       const title = dateMatch ? dateMatch[2].replace(/-/g, ' ') : name
-      return { title, date, filename: f, slug: name }
+      return { title, date, year, filename: f, slug: name }
     })
     .sort((a, b) => b.date.localeCompare(a.date))
 
