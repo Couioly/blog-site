@@ -10,7 +10,7 @@ Qt Designer，中文名称为Qt设计师，它是一个强大的可视化GUI设�
 ## 1  几种常用的窗口类型
 ---
 
-按照 [PyQt5-环境搭建](/blog/2025-08-16-pyqt5-PyQt5环境搭建) 的步骤在PyCharm开发工具中配置完Qt Designer后，即可通过PyCharm开发工具中的“External Tools”（扩展工具）菜单快速打开Qt Designer，步骤如下：
+按照 [PyQt5-环境搭建](/blog/2025-08-16-pyqt5-pyqt5) 的步骤在PyCharm开发工具中配置完Qt Designer后，即可通过PyCharm开发工具中的“External Tools”（扩展工具）菜单快速打开Qt Designer，步骤如下：
 
 1）在PyCharm的菜单栏中依次单击Tools→External Tools→Qt Designer菜单，如图所示。
 

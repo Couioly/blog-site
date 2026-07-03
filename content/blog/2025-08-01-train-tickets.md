@@ -24,7 +24,7 @@ Qt是Python开发窗体的工具之一，它不仅与Python有着良好的兼容
 **第三步**：在Python上安装Qt模块环境
 **第四步**：结合安装的PyQt5模块进行Pycharm的配置
 
-详细QT环境的配置，请访问 [PyQt5环境搭建](/blog/2025-08-16-pyqt5-PyQt5环境搭建)
+详细QT环境的配置，请访问 [PyQt5环境搭建](/blog/2025-08-16-pyqt5-pyqt5)
 
 ## 主窗体设计
 
