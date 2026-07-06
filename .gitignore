@@ -1,3 +1,6 @@
+# Build artifacts
+public/search-index.json
+
 # Nuxt build outputs
 .output/
 .nuxt/
