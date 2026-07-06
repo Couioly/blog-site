@@ -2,7 +2,7 @@
 title: "Python Logging 日志打印库详解"
 date: "2026-02-15"
 description: "Python logging 标准库完整教程，包含日志分级、Handler配置、Formatter格式化、文件切割与配置文件管理。"
-tags: ["Python", "日志"]
+tags: [python, logging]
 ---
 
 你想了解 Python 的 logging 日志库，它是 Python 内置的标准日志处理库（无需额外安装），相比简单的`print()`函数，提供了更灵活、更强大的日志分级、输出控制、持久化存储等功能，是项目开发（尤其是中大型项目）中日志记录的首选工具。

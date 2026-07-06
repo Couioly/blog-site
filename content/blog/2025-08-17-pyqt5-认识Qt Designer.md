@@ -2,7 +2,7 @@
 title: "PyQt5-认识 Qt Designer"
 date: "2025-08-17"
 description: "认识Qt Designer可视化界面设计工具，了解各区域功能与基本操作。"
-tags: ["Python", "PyQt5", "GUI"]
+tags: [python, pyqt5, gui]
 ---
 
 Qt Designer，中文名称为Qt设计师，它是一个强大的可视化GUI设计工具。通过使用Qt Designer设计GUI程序界面，可以大大地提高开发效率，本节先对Qt Designer及其支持的几种窗口类型进行介绍。

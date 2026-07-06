@@ -2,7 +2,7 @@
 title: "ClaudeCode CLI安装"
 date: "2026-04-05"
 description: "Claude Code CLI 安装与配置教程，包括绕过登录限制、接入免费大模型 LongCat 等"
-tags: [Claude Code, CLI, AI工具]
+tags: [ai, claude-code]
 ---
 
 ### 安装 ClaudeCode

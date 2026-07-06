@@ -2,7 +2,7 @@
 title: "Git 基础篇"
 date: "2026-04-09"
 description: "Git版本控制工具首次体验，了解git本地常见指令集，比如：添加到暂存区、提交、合并冲突、分支操作等等..."
-tags: ["工具","版本控制"]
+tags: [git, version-control]
 ---
 
 ## 1 Git 安装与常用命令

@@ -2,7 +2,7 @@
 title: "Ollama+Qwen3.5本地部署"
 date: "2026-04-01"
 description: "本地使用Ollama部署Qwen3.5实战过程"
-tags: [Ollama, Qwen, 本地部署, AI]
+tags: [ai, ollama, qwen, local-deploy]
 ---
 
 ### 安装 Ollama

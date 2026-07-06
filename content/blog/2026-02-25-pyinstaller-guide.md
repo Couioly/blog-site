@@ -2,7 +2,7 @@
 title: "PyInstaller 打包教程"
 date: "2026-02-25"
 description: "PyInstaller 完整教程，将Python脚本打包为独立exe，涵盖参数详解、spec文件配置、常见问题与解决方案。"
-tags: ["Python", "打包", "工具"]
+tags: [python, pyinstaller, packaging]
 ---
 
 PyInstaller 是一个非常实用的 Python 打包工具，能够将 Python 脚本打包成独立的可执行文件，无需用户安装 Python 解释器即可运行。本教程将详细介绍 PyInstaller 的使用方法和各种参数。

@@ -129,7 +129,7 @@ const fragmentGroups = computed<PostGroup[]>(() => {
 
 const displayYears = computed(() => fragmentGroups.value.map((g) => g.year))
 
-const { query, results: searchResults } = useSearch(fragmentMetas)
+const { query, results: searchResults } = useClientSearch(fragmentMetas)
 
 function formatDate(dateStr: string) {
   if (!dateStr) return ''

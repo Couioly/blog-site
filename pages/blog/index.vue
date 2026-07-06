@@ -22,7 +22,10 @@
       <div class="blog-content">
         <!-- Search results -->
         <template v-if="query.trim()">
-          <div v-if="searchResults.length === 0" class="empty-state">
+          <div v-if="searching" class="empty-state">
+            <p>搜索中...</p>
+          </div>
+          <div v-else-if="!searching && query.trim() && searchResults.length === 0" class="empty-state">
             <img src="/null.svg" alt="暂无结果" class="empty-illustration" />
             <p>未找到匹配的文章</p>
           </div>
@@ -109,7 +112,7 @@
 </template>
 
 <script setup lang="ts">
-import type { PostMeta, PostGroup } from '~/types/blog'
+import type { PostMeta, PostGroup, SearchResult } from '~/types/blog'
 
 useSeoMeta({
   title: '博客文章',
@@ -166,8 +169,8 @@ const postGroups = computed<PostGroup[]>(() => {
 
 const displayYears = computed(() => postGroups.value.map((g) => g.year))
 
-// Search (with debounce)
-const { query, results: searchResults } = useSearch(postMetas)
+// Search (server-side full-text)
+const { query, results: searchResults, searching } = useSearch()
 
 function formatDate(dateStr: string) {
   if (!dateStr) return ''

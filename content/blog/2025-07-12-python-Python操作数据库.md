@@ -2,7 +2,7 @@
 title: "Python-操作数据库"
 date: "2025-07-12"
 description: "Python数据库操作：sqlite3/sqlalchemy连接、CRUD操作、事务处理与连接池。"
-tags: ["Python", "基础"]
+tags: [python, database]
 ---
 ---
 ## 数据库编程接口

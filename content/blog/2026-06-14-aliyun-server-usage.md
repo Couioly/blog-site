@@ -2,7 +2,7 @@
 title: 阿里云服务器（学生优惠版）
 date: 2026-06-14
 description: 阿里云服务器（学生优惠版）
-tags: ["阿里云","服务器"]
+tags: [devops, aliyun, server]
 ---
 
 ## 一、购买服务器

@@ -2,7 +2,7 @@
 title: "sqlmap 工具使用"
 date: "2026-03-13"
 description: "sqlmap 自动化SQL注入工具使用教程，包含漏洞检测、数据库枚举、GET/POST请求实战案例。"
-tags: ["Kali", "安全", "SQL注入"]
+tags: [kali, sql-injection]
 ---
 
 >sqlmap介绍

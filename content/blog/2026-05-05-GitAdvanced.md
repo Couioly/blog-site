@@ -2,7 +2,7 @@
 title: "Git 进阶篇"
 date: "2026-05-05"
 description: "Git 进阶教程：远程仓库操作、SSH公钥配置、PyCharm中Git可视化管理、分支合并冲突解决。"
-tags: ["Git", "版本控制"]
+tags: [git, version-control]
 ---
 
 ## 1 Git 远程仓库

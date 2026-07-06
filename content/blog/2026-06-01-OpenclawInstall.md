@@ -2,7 +2,7 @@
 title: "OpenClaw 安装教程"
 date: "2026-06-01"
 description: "OpenClaw 安装与配置教程，包含 OpenAI 授权、DeepSeek 接入、常见问题排查及常用命令。"
-tags: ["工具", "AI"]
+tags: [ai, openclaw]
 ---
 
 ### 一键安装

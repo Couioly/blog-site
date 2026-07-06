@@ -2,7 +2,7 @@
 title: "12306 车票查询接口实现"
 date: "2025-08-01"
 description: "Python爬虫实战：使用PyQt5构建12306火车票查询GUI工具，包含窗体设计、请求参数分析与数据展示。"
-tags: ["Python", "爬虫", "PyQt5"]
+tags: [crawler, python, scraping]
 ---
 
 ## 12306爬票概述

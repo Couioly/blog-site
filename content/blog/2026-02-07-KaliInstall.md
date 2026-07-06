@@ -2,7 +2,7 @@
 title: "Kali 的下载和安装"
 date: "2026-02-07"
 description: "Kali Linux 下载、安装、配置与汉化完整教程，包含 VMware 虚拟机安装和中文输入法配置。"
-tags: ["Kali", "Linux", "安全"]
+tags: [kali, linux]
 ---
 
 **Kali下载官方地址：[Kali Linux | Penetration Testing and Ethical Hacking Linux Distribution](https://www.kali.org/)**

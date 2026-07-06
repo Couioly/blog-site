@@ -2,7 +2,7 @@
 title: "argparse 命令行参数解析工具"
 date: "2026-03-01"
 description: "Python argparse 标准库使用教程，掌握命令行参数解析、类型转换和自动帮助信息生成。"
-tags: ["Python", "命令行"]
+tags: [python, argparse, cli]
 ---
 
 `argparse` 是 Python 标准库中用于解析命令行参数的强大工具，它可以自动处理参数解析、类型转换、生成帮助信息等。以下是使用 `argparse` 解析命令行参数的详细步骤和示例。

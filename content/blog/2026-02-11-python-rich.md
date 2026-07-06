@@ -2,7 +2,7 @@
 title: "Rich 终端美化示例"
 date: "2026-02-11"
 description: "Python Rich库使用教程，终端美化、Panel面板、Console API、日志输出与JSON格式化。"
-tags: ["Python", "终端", "美化"]
+tags: [python, rich, cli]
 ---
 
 

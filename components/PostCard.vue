@@ -12,6 +12,7 @@
       <NuxtLink :to="`/blog/${post.slug}`">{{ post.title }}</NuxtLink>
     </strong>
     <span class="post-date">({{ formattedDate }})</span>
+    <span v-if="'snippet' in post && post.snippet" class="post-snippet"> — {{ post.snippet }}</span>
 
     <!-- Preview Popup -->
     <Teleport to="body">
@@ -40,9 +41,9 @@
 </template>
 
 <script setup lang="ts">
-import type { PostMeta } from '~/types/blog'
+import type { PostMeta, SearchResult } from '~/types/blog'
 
-const props = defineProps<{ post: PostMeta }>()
+const props = defineProps<{ post: PostMeta | SearchResult }>()
 
 const formattedDate = computed(() => {
   const d = new Date(props.post.date)
@@ -170,5 +171,10 @@ async function fetchPreview() {
 
 .post-preview-link:hover {
   color: var(--link-hover);
+}
+
+.post-snippet {
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 </style>

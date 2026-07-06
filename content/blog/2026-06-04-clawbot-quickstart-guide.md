@@ -2,7 +2,7 @@
 title: "0~1 ClawBot快速接入实战"
 date: "2026-06-04"
 description: "从零开始的ClawBot接入教程：OpenClaw安装配置、DeepSeek切换、微信插件接入、会话隔离设置。"
-tags: ["ClawBot", "OpenClaw", "DeepSeek", "微信", "智能体"]
+tags: [ai, clawbot, openclaw, deepseek, wechat]
 ---
 
 ### 前言：为什么我现在才尝试 OpenClaw

@@ -1,28 +1,33 @@
-import type { PostMeta } from '~/types/blog'
+import type { SearchResult } from '~/types/blog'
 
-export function useSearch(posts: Ref<PostMeta[]>) {
+export function useSearch() {
   const query = ref('')
-  const results = ref<PostMeta[]>([])
+  const results = ref<SearchResult[]>([])
+  const searching = ref(false)
   let debounceTimer: ReturnType<typeof setTimeout> | null = null
-
-  function runSearch() {
-    const q = query.value.trim().toLowerCase()
-    if (!q) {
-      results.value = []
-      return
-    }
-    results.value = posts.value.filter(
-      (p) =>
-        p.title.toLowerCase().includes(q) ||
-        (p.description && p.description.toLowerCase().includes(q)) ||
-        (p.tags && p.tags.some((t) => t.toLowerCase().includes(q)))
-    )
-  }
 
   watch(query, () => {
     if (debounceTimer) clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(runSearch, 300)
+    const q = query.value.trim()
+    if (!q) {
+      results.value = []
+      searching.value = false
+      return
+    }
+    searching.value = true
+    debounceTimer = setTimeout(async () => {
+      try {
+        const data = await $fetch<{ results: SearchResult[] }>('/api/search', {
+          query: { q: query.value.trim() },
+        })
+        results.value = data.results
+      } catch {
+        results.value = []
+      } finally {
+        searching.value = false
+      }
+    }, 300)
   })
 
-  return { query, results }
+  return { query, results, searching }
 }

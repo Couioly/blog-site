@@ -2,7 +2,7 @@
 title: "微信 ClawBot 插件"
 date: "2026-06-01"
 description: "微信 ClawBot 插件安装与配置，将会话隔离的 AI 机器人接入微信，支持多用户独立对话。"
-tags: ["工具", "微信"]
+tags: [ai, clawbot, wechat]
 ---
 
 ### 一、安装接入

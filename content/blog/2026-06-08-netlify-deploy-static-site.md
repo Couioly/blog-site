@@ -2,7 +2,7 @@
 title: "Netlify部署静态网站"
 date: "2026-06-08"
 description: "从零到一：使用Netlify部署静态网站，包括Git推送、自动部署、自定义域名及DNS配置全流程"
-tags: ["Netlify", "GitHub", "Git", "静态网站部署"]
+tags: [devops, netlify, github, deployment]
 ---
 
 ## 一、部署前准备

@@ -2,7 +2,7 @@
 title: "Pyfiglet 使用教程"
 date: "2026-03-05"
 description: "Pyfiglet ASCII艺术字生成教程，将普通文本转换为Banner、支持多种字体样式、对齐方式与颜色输出。"
-tags: ["Python", "终端"]
+tags: [python, pyfiglet, cli]
 ---
 
 ## 一、Pyfiglet 简介

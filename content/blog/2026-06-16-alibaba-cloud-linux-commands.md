@@ -2,7 +2,7 @@
 title: "Alibaba Cloud Linux 指令集"
 date: "2026-06-16"
 description: "Alibaba Cloud Linux 常用指令整理，涵盖 tree 安装、MySQL 8.0 部署、防火墙配置及远程连接等运维操作"
-tags: [Alibaba Cloud, Linux, 指令, 运维]
+tags: [devops, aliyun, linux]
 ---
 
 ### 安装tree

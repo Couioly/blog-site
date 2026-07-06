@@ -2,7 +2,7 @@
 title: "Codex APP 安装教程"
 date: "2026-05-14"
 description: "OpenAI Codex APP 桌面客户端安装指南，从下载到首次使用的完整流程。"
-tags: ["工具", "AI"]
+tags: [ai, codex]
 ---
 
 **Codex APP 下载官网地址：https://chatgpt.com/zh-Hans-CN/codex/get-started/**

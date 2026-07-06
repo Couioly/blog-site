@@ -2,7 +2,7 @@
 title: "运行服务端Python文件"
 date: "2026-03-31"
 description: "将 Python 文件设为开机自启动服务，实现后台稳定运行、崩溃自动重启。"
-tags: [Python, 系统服务, 部署, 运维]
+tags: [python, devops, service]
 ---
 
 > 将 Python 文件设为开机自启动服务，核心是**把脚本注册为系统服务**（Windows 用 NSSM / 任务计划，Linux 用 systemd），实现后台稳定运行、崩溃自动重启。下面分系统给出最稳方案。

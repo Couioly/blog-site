@@ -2,7 +2,7 @@
 title: "Python-安装"
 date: "2025-07-01"
 description: "Python解释器安装教程，Windows平台下载、安装与环境变量配置。"
-tags: ["Python", "基础"]
+tags: [python, basics]
 ---
 
 ## Python介绍

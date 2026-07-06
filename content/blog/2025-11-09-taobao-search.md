@@ -2,7 +2,7 @@
 title: "淘宝搜索接口实现"
 date: "2025-11-09"
 description: "Python爬虫实战：淘宝搜索接口逆向分析，sign参数JS逆向、execjs调用与数据采集。"
-tags: ["Python", "爬虫", "JavaScript逆向"]
+tags: [crawler, scraping, reverse-engineering]
 ---
 
 

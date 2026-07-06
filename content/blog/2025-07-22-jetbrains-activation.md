@@ -2,7 +2,7 @@
 title: "Jetbrains全家桶"
 date: "2025-07-22"
 description: "激活Jetbrains整体流程（破解版）"
-tags: [JetBrains, IDE, 激活, 开发工具]
+tags: [tools, jetbrains, ide]
 ---
 
 ### ckey.run激活Jetbrains全家桶

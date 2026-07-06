@@ -2,7 +2,7 @@
 title: "BeautifulSoup 使用说明"
 date: "2026-02-20"
 description: "Python BeautifulSoup 库使用教程，HTML/XML解析、节点导航、搜索与CSS选择器实战。"
-tags: ["Python", "爬虫", "HTML"]
+tags: [python, beautifulsoup, crawler]
 ---
 
 ### BeautifulSoup介绍

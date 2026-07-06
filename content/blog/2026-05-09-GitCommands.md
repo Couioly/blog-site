@@ -2,7 +2,7 @@
 title: "Git 指令集"
 date: "2026-05-09"
 description: "Git 实用指令集：本地文件永久忽略、团队远程推送流程、Connection was reset 问题排查与解决。"
-tags: ["Git", "版本控制"]
+tags: [git, version-control]
 ---
 
 ### 1 本地修改文件不提交到远程

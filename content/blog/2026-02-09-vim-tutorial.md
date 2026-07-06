@@ -2,7 +2,7 @@
 title: "Vim 详细使用教程"
 date: "2026-02-09"
 description: "这份教程会从零基础开始，帮你快速掌握 Vim 的核心操作，无论是在 Linux/macOS 还是 Windows 终端里都能高效使用。"
-tags: [Vim, 编辑器, 教程, 终端]
+tags: [tools, vim]
 ---
 
 

@@ -2,7 +2,7 @@
 title: "Kali渗透之WiFi破解"
 date: "2025-08-03"
 description: "使用 Kali Linux 配合无线网卡进行 WiFi 渗透测试，从监听、扫描到抓包、字典破解的完整流程"
-tags: [Kali Linux, WiFi, 安全, 渗透测试]
+tags: [kali, wifi, pentesting]
 ---
 
 ### 0 准备工作

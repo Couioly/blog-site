@@ -2,7 +2,7 @@
 title: "PyQt5-使用 Qt Designer 创建窗口"
 date: "2025-08-18"
 description: "使用Qt Designer创建第一个窗口，.ui文件转.py文件与代码调试。"
-tags: ["Python", "PyQt5", "GUI"]
+tags: [python, pyqt5, gui]
 ---
 
 
