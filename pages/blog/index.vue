@@ -142,7 +142,7 @@ const { data: posts } = await useAsyncData('blog-posts', () =>
 const postMetas = computed<PostMeta[]>(() => {
   if (!posts.value) return []
   return posts.value.map((p) => {
-    const slug = p._path.replace(/^\/blog\//, '')
+    const slug = p._path.replace(/^\/blog\//, '').toLowerCase()
     const d = new Date(p.date || '')
     return {
       title: p.title || slug,

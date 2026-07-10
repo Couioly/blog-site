@@ -66,7 +66,7 @@ async function main() {
 
     if (!fm.title || !fm.date) continue
 
-    const slug = basename(file, '.md').replace(/^\d{4}-\d{2}-\d{2}-/, '')
+    const slug = basename(file, '.md').toLowerCase()
 
     index.push({
       title: fm.title,
