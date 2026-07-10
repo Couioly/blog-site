@@ -1,0 +1,60 @@
+<article style="max-width:720px;margin:0 auto;line-height:1.85;font-size:1rem;">
+
+  <p>在抖音的评论区里，经常能看到这样的留言：<strong>"有没有 2003 年 7 月 15 日出生的？点赞我一个个私信你们"</strong>——动辄成百上千条回复。每一条背后，都是一个真实的人在寻找另一个与自己同一天诞生的陌生人。</p>
+  <img src="/images/fragments/parallelworld/广场页面.png" alt="广场页面" style="float:left;width:110px;margin:0.4rem 1.2rem 0.8rem 0;display:block;">
+
+  <p>星座、命理、生日缘分——这些概念在年轻人中有着持久的文化引力。但市面上没有一个产品专门服务于这种需求。于是我花了3亿Token两天时间，从零搭建了<strong>平行世界（ParallelWorld）</strong>小程序（由于个人开发者限制，无法进行BBS专项备案）。</p>
+
+  <p>它的规则很简单：通过邀请码注册，填写出生日期，系统自动将你加入由所有同生日用户组成的群聊。没有算法推荐，没有信息流，没有广告——只有<strong>"同一天出生"</strong>这个纯粹而不可伪造的纽带。打开应用，广场页面干净得不像一个社交产品，唯一的目的就是引导你去属于你生日的那一个群。</p>
+
+  <div style="clear:both;"></div>
+
+  <h2 style="font-size:1.3rem;margin-top:2em;">邀请码 × 生日群</h2>
+  <img src="/images/fragments/parallelworld/群聊页面.png" alt="群聊页面" style="float:right;width:200px;margin:0.4rem 0 0.8rem 1.2rem;display:block;">
+
+  <p>平台不开放自由注册。每位用户注册时必须提供有效邀请码，注册成功后自动获得 2 个新邀请码，形成去中心化的扩散链路。每个日期对应一个独立的群聊——用户填写生日后，无需搜索、申请或等待通过，系统自动将其加入对应群聊。</p>
+
+  <p>这种设计带来几个有趣的特性：<strong>群聊即身份</strong>（你在哪个群直接暴露了你的出生日）、<strong>天然的内容质量</strong>（邀请码让恶意注册成本极高）、<strong>有限的社交范围</strong>（只和同一天出生的人对话）。邀请码用完后可向站主申请补充，整体形成可控的半封闭生态。</p>
+
+
+  <p>群聊是产品的核心。你无法选择群——群由你的出生日决定。WebSocket 实时通信，支持文字消息、图片发送、消息撤回。群主可以自定义群名称和头像，也可以对成员禁言。群成员列表按加入时间排列，你可以点进任意成员的主页，添加好友，然后开启私聊。<strong>整个社交图谱从"同一天出生"这一个点展开，简洁到几乎没有冗余。</strong></p>
+
+  <img src="/images/fragments/parallelworld/好友页面.png" alt="好友页面" style="float:left;width:100px;margin:0.4rem 1.2rem 0.8rem 0;display:block;">
+
+  <p>隐私设置是我特别在意的一环。昵称、性别、星座、地区——每一项都可以逐字段设为公开或仅好友可见，而不是一刀切的开关。<strong>把控制权交还给用户</strong>，这是平行世界在产品层面最坚持的一件事。</p>
+
+  <p>好友系统同样克制。没有"推荐关注"、没有"你可能认识"、没有"通讯录导入"。你的好友列表里只有一种人：和你同一天出生、并且你主动选择连接的人。好友关系是双向的，通过申请-同意机制建立，之后你们才能看到彼此的完整资料和在线状态。</p>
+
+  <div style="clear:both;"></div>
+
+  <h2 style="font-size:1.3rem;margin-top:2em;">群管理：三级权限</h2>
+
+  <img src="/images/fragments/parallelworld/不同身份的群管理页面.png" alt="群管理" style="width:100%;margin:1.2rem 0;display:block;border-radius:4px;">
+
+  <p>群主、管理员、普通成员——三级权限覆盖了群聊治理的主要场景。群主拥有完整控制权（修改群信息、设置管理员、禁言踢人），管理员可以禁言但不能修改群信息，普通成员仅享有聊天和社交功能。<strong>你没有的权限，压根不会出现在界面上。</strong>权限边界通过按钮的显示与隐藏来自然区分，不需要文档也能理解。</p>
+
+  <h2 style="font-size:1.3rem;margin-top:2em;">技术选型与部署</h2>
+
+  <p>后端选择了 <strong>FastAPI</strong>——原生 async/await、WebSocket 一等公民、Pydantic 自动校验。数据库用 MySQL 8.0 + SQLAlchemy 2.0 异步 ORM，Redis 做 Token 黑名单和滑动窗口限流。前端用 uni-app（Vue 3 Composition API + Pinia），编译到微信小程序。</p>
+  
+  <img src="/images/fragments/parallelworld/群成员列表页面.png" alt="群成员列表" style="float:right;width:200px;margin:0.4rem 0 0.8rem 1.2rem;display:block;">
+
+  <p>整体是单体架构，58 个 Python 文件约 6500 行，27 个前端文件约 6400 行，11 张数据库表。没有微服务，没有 Kubernetes，没有消息队列——<strong>以一个人能维护的规模，完成一个完整的社交产品。</strong>安全方面七层防护：敏感词 AC 自动机、URL 外链检测、Redis 三层限流、图片先审后发、magic bytes 校验、注册和登录频率限制、JWT 双 Token + bcrypt。</p>
+
+  <p>部署在阿里云 ECS 1.8GB 内存上，Docker Compose 三容器——Nginx、FastAPI（2 个 uvicorn worker）、MySQL 8.0、Redis 7。过程中踩了不少坑：数据库密码里的 @ 必须编码为 %40、WebSocket 的 async session 不自动 commit 导致消息丢失、新旧 token 切换时 WS 连接残留、前后端字段名不对齐。<strong>开发前约定比事后修快得多，这是真理。</strong></p>
+
+  <p>群成员列表是每个用户日常都会看到的页面。成员按加入时间倒序排列，顶部的搜索框在群人数多的时候变得不可或缺。点击任意成员可以跳转到他的个人主页，从那里发起好友申请或私聊。</p>
+
+  <div style="clear:both;"></div>
+
+  <h2 style="font-size:1.3rem;margin-top:2em;">写在最后</h2>
+
+  <p>平行世界是一个反潮流的产品。在算法推荐、短视频、信息茧房成为社交产品标配的时代，它回到了最简单的连接方式：<strong>我们同一天来到这个世界，仅此而已。</strong></p>
+
+  <p>它不追求 DAU 增长，不设留存率 KPI，不做 A/B 测试。它只是一个安静的地方，让同年同月同日生的人可以相遇。</p>
+
+  <p>从写下第一行代码到部署上线，两个月。58 个后端文件，27 个前端文件，11 张表，30+ 个 API 端点，Docker Compose 一条命令启动。<strong>一个人、一台服务器、一个 idea——就足以让一个社交产品从零跑到上线。</strong></p>
+
+  <p style="margin-top:2em;color:#888;font-size:0.9rem;">源码：<a href="https://gitee.com/Couioly/parallel-world" style="color:#888;">gitee.com/Couioly/parallel-world</a></p>
+
+</article>

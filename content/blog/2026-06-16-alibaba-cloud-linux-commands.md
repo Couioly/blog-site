@@ -580,3 +580,401 @@ FLUSH PRIVILEGES;
 
 ![1781579016850](/images/blog/alibaba-cloud-linux-commands/1781579016850.png)
 
+
+### 安装Docker工具
+
+1.首先，我会检查系统包管理器（dnf）中是否包含 Docker 的官方包。
+
+```bash
+sudo dnf list docker
+```
+
+响应结果：
+
+```bash
+[ecs-assist-user@iZm5ed6enyjwnqzx18bc3sZ ~]$ sudo dnf list docker
+Last metadata expiration check: 3:13:05 ago on Wed 08 Jul 2026 06:03:40 AM CST.
+Error: No matching Packages to list
+```
+
+2.系统默认的包管理器中没有找到 Docker 包。接下来，我将尝试从 Docker 官方源安装。首先，我需要验证是否可以正常访问 Docker 的官方下载地址。
+
+```bash
+curl --head --max-time 10 https://download.docker.com
+```
+
+响应结果：
+
+```bash
+[ecs-assist-user@iZm5ed6enyjwnqzx18bc3sZ ~]$ curl --head --max-time 10 https://download.docker.com
+curl: (35) OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to download.docker.com:443 
+```
+
+3.无法直接访问 Docker 官方下载地址（download.docker.com），这可能是由于网络限制或 SSL 连接问题。我们可以尝试使用阿里云的 Docker 镜像源来安装 Docker。首先，我会检查系统是否已配置阿里云的 Docker 仓库。
+
+```bash
+cat /etc/yum.repos.d/docker-ce.repo
+```
+
+响应结果：
+
+```bash
+[ecs-assist-user@iZm5ed6enyjwnqzx18bc3sZ ~]$ cat /etc/yum.repos.d/docker-ce.repo
+cat: /etc/yum.repos.d/docker-ce.repo: No such file or directory
+```
+
+4.系统中尚未配置 Docker 的 yum 仓库。接下来，我将使用阿里云的 Docker 镜像源来添加 Docker 仓库。
+
+```bash
+sudo wget -O /etc/yum.repos.d/docker-ce.repo http://mirrors.cloud.aliyuncs.com/docker-ce/linux/centos/docker-ce.repo
+```
+
+响应结果：
+
+```bash
+[ecs-assist-user@iZm5ed6enyjwnqzx18bc3sZ ~]$ sudo wget -O /etc/yum.repos.d/docker-ce.repo http://mirrors.cloud.aliyuncs.com/docker-ce/linux/centos/docker-ce.repo
+--2026-07-08 09:22:45--  http://mirrors.cloud.aliyuncs.com/docker-ce/linux/centos/docker-ce.repo
+Resolving mirrors.cloud.aliyuncs.com (mirrors.cloud.aliyuncs.com)... 100.100.2.148
+Connecting to mirrors.cloud.aliyuncs.com (mirrors.cloud.aliyuncs.com)|100.100.2.148|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2081 (2.0K) [application/octet-stream]
+Saving to: ‘/etc/yum.repos.d/docker-ce.repo’
+
+/etc/yum.repos.d/docker-ce.repo     100%[==================================================================>]   2.03K  --.-KB/s    in 0s      
+
+2026-07-08 09:22:45 (97.9 MB/s) - ‘/etc/yum.repos.d/docker-ce.repo’ saved [2081/2081]
+```
+
+5.Docker 仓库已成功添加。接下来，我需要确保仓库配置使用阿里云镜像地址，以提高下载速度。我会检查并替换仓库文件中的默认地址为阿里云镜像地址。
+
+```bash
+sudo sed -i 's|https://download.docker.com|http://mirrors.cloud.aliyuncs.com/docker-ce|g' /etc/yum.repos.d/docker-ce.repo
+```
+
+响应结果：
+
+```bash
+[ecs-assist-user@iZm5ed6enyjwnqzx18bc3sZ ~]$ sudo sed -i 's|https://download.docker.com|http://mirrors.cloud.aliyuncs.com/docker-ce|g' /etc/yum.repos.d/docker-ce.repo
+```
+
+6.仓库配置已成功更新为阿里云镜像地址。现在，我会使用 dnf 安装 Docker。
+
+```bash
+sudo dnf -y install docker-ce docker-ce-cli containerd.io
+```
+
+响应结果：
+
+```bash
+[ecs-assist-user@iZm5ed6enyjwnqzx18bc3sZ ~]$ sudo dnf -y install docker-ce docker-ce-cli containerd.io
+Docker CE Stable - x86_64                                                                                      270 kB/s |  66 kB     00:00    
+Dependencies resolved.
+===============================================================================================================================================
+ Package                                    Architecture            Version                            Repository                         Size
+===============================================================================================================================================
+Installing:
+ containerd.io                              x86_64                  1.6.32-3.1.el8                     docker-ce-stable                   35 M
+ ...
+ docker-compose-plugin                      x86_64                  2.27.0-1.el8                       docker-ce-stable                   13 M
+
+Transaction Summary
+===============================================================================================================================================
+Install  12 Packages
+
+Total download size: 103 M
+Installed size: 390 M
+Downloading Packages:
+(1/12): fuse3-3.3.0-19.1.al8.x86_64.rpm                                                                        1.4 MB/s |  55 kB     00:00    
+(2/12): libcgroup-2.0-1.0.1.al8.x86_64.rpm                                                                      18 MB/s |  79 kB     00:00    
+...   
+(12/12): docker-compose-plugin-2.27.0-1.el8.x86_64.rpm                                                         5.0 MB/s |  13 MB     00:02    
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                           13 MB/s | 103 MB     00:07     
+Docker CE Stable - x86_64                                                                                       42 kB/s | 1.6 kB     00:00    
+Importing GPG key 0x621E9F35:
+ Userid     : "Docker Release (CE rpm) <docker@docker.com>"
+ Fingerprint: 060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35
+ From       : https://mirrors.aliyun.com/docker-ce/linux/centos/gpg
+Key imported successfully
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                       1/1 
+  Installing       : docker-compose-plugin-2.27.0-1.el8.x86_64                                                                            1/12 
+  ...
+  Verifying        : docker-ce-cli-1:26.1.3-1.el8.x86_64                                                                                 10/12 
+  Verifying        : docker-ce-rootless-extras-26.1.3-1.el8.x86_64                                                                       11/12 
+  Verifying        : docker-compose-plugin-2.27.0-1.el8.x86_64                                                                           12/12 
+
+Installed:
+  containerd.io-1.6.32-3.1.el8.x86_64       docker-buildx-plugin-0.14.0-1.el8.x86_64           docker-ce-3:26.1.3-1.el8.x86_64               
+  docker-ce-cli-1:26.1.3-1.el8.x86_64       docker-ce-rootless-extras-26.1.3-1.el8.x86_64      docker-compose-plugin-2.27.0-1.el8.x86_64     
+  fuse-overlayfs-1.13-1.0.1.al8.x86_64      fuse3-3.3.0-19.1.al8.x86_64                        fuse3-libs-3.3.0-19.1.al8.x86_64              
+  libcgroup-2.0-1.0.1.al8.x86_64            libslirp-4.4.0-2.al8.x86_64                        slirp4netns-1.2.3-1.al8.x86_64                
+
+Complete!
+```
+
+Docker 已成功安装！您可以使用以下命令验证安装并开始使用：
+
+- 检查 Docker 版本：`docker --version`
+- 启动 Docker 服务：`sudo systemctl start docker`
+- 设置 Docker 开机自启：`sudo systemctl enable docker`
+- 查看 Docker 当前状态：`sudo systemctl status docker`
+
+### 安装Git
+
+1.首先，我会检查是否可以使用系统的包管理器 `dnf` 安装 Git。让我先查询包管理器中是否有可用的 Git 包。
+
+```bash
+sudo dnf list git
+```
+
+响应结果：
+
+```bash
+[ecs-assist-user@iZm5ed6enyjwnqzx18bc3sZ ~]$ sudo dnf list git
+Last metadata expiration check: 1:37:14 ago on Wed 08 Jul 2026 09:25:25 AM CST.
+Available Packages
+git.x86_64                                                   2.43.7-1.0.1.al8  
+```
+
+2.包管理器中找到了 Git 的可用版本（2.43.7-1.0.1.al8），接下来我将使用 dnf 直接安装 Git。
+
+```bash
+sudo dnf -y install git
+```
+
+响应结果：
+
+```bash
+[ecs-assist-user@iZm5ed6enyjwnqzx18bc3sZ ~]$ sudo dnf -y install git
+Last metadata expiration check: 1:38:34 ago on Wed 08 Jul 2026 09:25:25 AM CST.
+Dependencies resolved.
+===============================================================================================================================================
+ Package                             Architecture              Version                                Repository                          Size
+===============================================================================================================================================
+Installing:
+ git                                 x86_64                    2.43.7-1.0.1.al8                       alinux3-updates                     93 k
+Installing dependencies:
+ git-core                            x86_64                    2.43.7-1.0.1.al8                       alinux3-updates                     11 M
+ git-core-doc                        noarch                    2.43.7-1.0.1.al8                       alinux3-updates                    3.1 M
+ perl-Error                          noarch                    1:0.17025-2.1.al8                      alinux3-os                          46 k
+ perl-Git                            noarch                    2.43.7-1.0.1.al8                       alinux3-updates                     79 k
+ perl-TermReadKey                    x86_64                    2.37-7.2.al8                           alinux3-os                          41 k
+
+Transaction Summary
+===============================================================================================================================================
+Install  6 Packages
+
+Total download size: 15 M
+Installed size: 47 M
+Downloading Packages:
+(1/6): perl-TermReadKey-2.37-7.2.al8.x86_64.rpm                                                                1.0 MB/s |  41 kB     00:00    
+...   
+(6/6): git-core-2.43.7-1.0.1.al8.x86_64.rpm                                                                     58 MB/s |  11 MB     00:00    
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                           61 MB/s |  15 MB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                       1/1 
+  Installing       : git-core-2.43.7-1.0.1.al8.x86_64                                                                                      1/6 
+  ...
+  Installing       : perl-Git-2.43.7-1.0.1.al8.noarch                                                                                      6/6 
+  Running scriptlet: perl-Git-2.43.7-1.0.1.al8.noarch                                                                                      6/6 
+  Verifying        : perl-Error-1:0.17025-2.1.al8.noarch                                                                                   1/6 
+  ...
+  Verifying        : perl-Git-2.43.7-1.0.1.al8.noarch                                                                                      6/6 
+
+Installed:
+  git-2.43.7-1.0.1.al8.x86_64                     git-core-2.43.7-1.0.1.al8.x86_64             git-core-doc-2.43.7-1.0.1.al8.noarch            
+  perl-Error-1:0.17025-2.1.al8.noarch             perl-Git-2.43.7-1.0.1.al8.noarch             perl-TermReadKey-2.37-7.2.al8.x86_64            
+
+Complete!
+```
+
+Git 已成功安装！您可以使用以下命令验证安装并开始使用：
+
+- 检查 Git 版本：`git --version`
+- 配置 Git 用户名和邮箱（首次使用时）：
+  `git config --global user.name "Your Name"`
+  `git config --global user.email "your.email@example.com"`
+
+### 部署微信小程序至服务器
+
+1.在服务器端执行远程克隆仓库指令：
+
+```bash
+git clone https://gitee.com/你的用户名/仓库名.git
+```
+
+> 接下来以我的实际项目为例，仅供参考
+
+2.进入 deploy 目录，创建配置文件
+
+```bash
+cd ~/parallelworld/deploy
+cp .env.template .env.production
+```
+
+3.生成密钥
+
+```bash
+openssl rand -hex 32 # 把输出的字符串记下来
+```
+
+4.编辑 `.env.production`
+
+```bash
+vim .env.production
+```
+
+最少需要改这 3 项（其他的可以先默认，后续再配）：
+
+  SECRET_KEY=刚才生成的那串字符串
+  MYSQL_ROOT_PASSWORD=你自己设一个密码
+  DATABASE_URL=mysql+aiomysql://root:你自己设的密码@mysql:3306/parallel_world
+
+> 注意：DATABASE_URL 里的主机名是 mysql（Docker 内部服务名），不要改成 localhost 或 IP。
+
+5.执行docker指令开始构建项目：
+
+```bash
+docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
+```
+
+执行时出现了报错：
+
+![1783487216966](/images/blog/alibaba-cloud-linux-commands/1783487216966.png)
+
+解决报错：
+
+原因：国内服务器访问 Docker Hub 超时了，需要配置国内镜像加速器：
+
+```bash
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json << 'EOF'
+{
+    "registry-mirrors": [
+    "https://docker.m.daocloud.io",
+    "https://docker.1ms.run",
+    "https://hub.rat.dev"
+    ]
+}
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+6.等 Docker 重启完成后，再次启动：
+
+```bash
+docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
+```
+
+响应结果：
+
+```bash
+[root@iZm5ed6enyjwnqzx18bc3sZ deploy]# docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
+WARN[0000] The "OSS_BUCKET" variable is not set. Defaulting to a blank string.
+WARN[0000] /codedir/aicode/parallel-world/deploy/docker-compose.prod.yml: `version` is obsolete
+[+] Running 29/29
+ ✔ redis Pulled                                                                                                                           35.1s
+   ✔ 897d797d2723 Pull complete                                                                                                           17.8s
+   ...
+   ✔ 96d30d9fbee8 Pull complete                                                                                                           83.9s
+[+] Building 6859.5s (12/12) FINISHED                                                                                            docker:default
+ => [app internal] load build definition from Dockerfile                                                                                   0.0s
+ => => transferring dockerfile: 629B                                                                                                       0.0s
+ ...
+ => => writing image sha256:6d92d4c8f2bf63c113298b67647222ef0e94b812949c42fec1e41f1898bae56c                                               0.0s
+ => => naming to docker.io/library/deploy-app                                                                                              0.0s
+[+] Running 8/8
+ ✔ Network deploy_default       Created                                                                                                    0.2s
+ ...                                                                                    12.0s
+ ✔ Container pw-nginx           Started                                                                                                   12.8s
+```
+
+7.响应中四个容器全部启动成功：
+
+```bash
+# 验证一下
+docker compose -f docker-compose.prod.yml ps
+# 然后测试 API：
+curl http://localhost:8080/health
+```
+
+响应结果：
+
+```bash
+[root@iZm5ed6enyjwnqzx18bc3sZ deploy]# docker compose -f docker-compose.prod.yml ps
+WARN[0000] The "DATABASE_URL" variable is not set. Defaulting to a blank string.
+WARN[0000] The "REDIS_URL" variable is not set. Defaulting to a blank string.
+WARN[0000] The "SECRET_KEY" variable is not set. Defaulting to a blank string.
+WARN[0000] The "OSS_ACCESS_KEY" variable is not set. Defaulting to a blank string.
+WARN[0000] The "OSS_SECRET_KEY" variable is not set. Defaulting to a blank string.
+WARN[0000] The "OSS_ENDPOINT" variable is not set. Defaulting to a blank string.
+WARN[0000] The "OSS_BUCKET" variable is not set. Defaulting to a blank string.
+WARN[0000] The "MYSQL_ROOT_PASSWORD" variable is not set. Defaulting to a blank string.
+WARN[0000] /codedir/aicode/parallel-world/deploy/docker-compose.prod.yml: `version` is obsolete
+NAME       IMAGE               COMMAND                  SERVICE   CREATED         STATUS                   PORTS
+pw-app     deploy-app          "/bin/sh -c 'uvicorn…"   app       3 minutes ago   Up 3 minutes             8000/tcp
+pw-mysql   mysql:8.0           "docker-entrypoint.s…"   mysql     3 minutes ago   Up 3 minutes (healthy)   3306/tcp, 33060/tcp
+pw-nginx   nginx:1.26-alpine   "/docker-entrypoint.…"   nginx     3 minutes ago   Up 3 minutes             0.0.0.0:8080->80/tcp, :::8080->80/tcp, 0.0.0.0:8443->443/tcp, :::8443->443/tcp
+pw-redis   redis:7-alpine      "docker-entrypoint.s…"   redis     3 minutes ago   Up 3 minutes (healthy)   6379/tcp
+[root@iZm5ed6enyjwnqzx18bc3sZ deploy]# curl http://localhost:8080/health
+{"status":"ok","app":"ParallelWorld"}[root@iZm5ed6enyjwnqzx18bc3sZ deploy]#
+```
+
+8.根据自己的端口号配置安全组策略
+
+9.搜集公网IP，将返回的IP设置在前端的配置文件 `config.js` 中
+
+```bash
+curl ifconfig.me
+```
+
+10.编译前端微信小程序，使用微信开发者工具打开构建的 `"dist\dev\mp-weixin"`，然后调试或上传代码
+
+11.执行下列指令可以查询服务器端数据库的邀请码表内容：
+
+```bash
+docker exec pw-mysql mysql -uroot -p'yourpassworld' parallel_world -e "SELECT id, code, status FROM invite_codes;"
+```
+
+12.测试时微信开发者工具模拟器可以正常使用WebSocket功能进行通信，但是预览模式和真机测试模式都无法在手机端测试，AI告诉我说必须采用 `域名+SSL证书` 的方式部署网站，才能正常使用通信。
+
+![1783603855934](/images/blog/alibaba-cloud-linux-commands/1783603855934.png)
+
+13.关于免费申请阿里云个人测试证书请访问 [【如何申请阿里云个人测试SSL证书】](/blog/2026-07-10-personal-test-ssl-certificate) 
+
+14.为域名绑定SSL证书后，将其绑定至小程序即可正常使用手机端进行通信测试；
+
+15.**社交相关的系统需要 `BBS专项备案` ，否则将以个人单位发布软件将会被拉入黑名单，同时面临行政处罚**。
+
+### 其他使用到的命令：
+
+```bash
+docker exec pw-mysql mysql -uroot -p'passworld' parallel_world -e "SELECT id, sender_id, receiver_id, content, created_at FROM private_messages ORDER BY id DESC LIMIT 10;"
+
+docker exec pw-mysql mysql -uroot -p'passworld' parallel_world -e "UPDATE users SET avatar_url = '' WHERE avatar_url LIKE '%placeholder.com%' OR avatar_url LIKE '%via.placeholder%';"
+
+docker exec pw-mysql mysql -uroot -p'passworld' parallel_world -e "UPDATE users SET avatar_url = '' WHERE avatar_url LIKE '%placeholder.com%' OR avatar_url LIKE '%via.placeholder%';"
+
+docker compose -f docker-compose.prod.yml --env-file .env.production down
+docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
+
+sed -i 's/"80:80"/"8080:80"/' docker-compose.prod.yml
+sed -i '/"8443:443"/d; s/"443:443",\?//; s/"443:443"/"8080:80"/' docker-compose.prod.yml
+
+docker exec pw-nginx cat /etc/nginx/nginx.conf
+```
+
+
+
