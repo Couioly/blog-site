@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nuxi dev",
+    "dev": "node scripts/build-search-index.mjs && nuxi dev",
     "build": "node scripts/build-search-index.mjs && nuxi generate",
     "generate": "nuxi generate",
     "preview": "nuxi preview"
