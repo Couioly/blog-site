@@ -31,7 +31,7 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   height: 3px;
-  background: var(--link);
+  background: #FFB7B2;
   z-index: 1000;
   transition: width 0.1s linear;
 }

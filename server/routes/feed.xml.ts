@@ -33,9 +33,9 @@ export default defineEventHandler(async (event) => {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>我的博客</title>
+    <title>JunbX · 博客</title>
     <link>${SITE_URL}</link>
-    <description>个人博客 - 记录思考与学习</description>
+    <description>JunbX · 个人博客 - 记录思考与学习</description>
     <language>zh-CN</language>
     <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
 ${items}

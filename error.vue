@@ -1,5 +1,8 @@
 <template>
   <div class="error-page">
+    <div class="error-icon">
+      <span class="text-5xl">🧸</span>
+    </div>
     <h1>{{ error.statusCode === 404 ? '页面未找到' : '出错了' }}</h1>
     <p v-if="error.statusCode === 404">
       你访问的页面不存在，请检查链接是否正确。
@@ -7,7 +10,7 @@
     <p v-else>
       {{ error.message || '发生了一个未知错误。' }}
     </p>
-    <NuxtLink to="/blog" class="error-back">← 返回博客首页</NuxtLink>
+    <NuxtLink to="/" class="btn-secondary">← 返回首页</NuxtLink>
   </div>
 </template>
 
@@ -24,26 +27,27 @@ useSeoMeta({
 <style scoped>
 .error-page {
   text-align: center;
-  padding: 4rem 1rem;
+  padding: 6rem 1rem;
+}
+
+.error-icon {
+  margin-bottom: 1.5rem;
 }
 
 .error-page h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #292524;
+  margin: 0 0 1rem;
+  border: none;
+  padding: 0;
+  letter-spacing: -0.025em;
 }
 
 .error-page p {
-  color: var(--text-muted);
+  color: #78716C;
   margin-bottom: 2rem;
-}
-
-.error-back {
-  font-size: 1rem;
-  color: var(--link);
-  text-decoration: none;
-}
-
-.error-back:hover {
-  color: var(--link-hover);
+  font-size: 1.05rem;
 }
 </style>

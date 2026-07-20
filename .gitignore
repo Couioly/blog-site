@@ -30,3 +30,6 @@ Thumbs.db
 # Debug
 npm-debug.log*
 pnpm-debug.log*
+
+# 排除项
+other/

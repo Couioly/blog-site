@@ -56,9 +56,9 @@
               <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">
                 {{ group.posts.length }} 篇文章
               </p>
-              <h1>
+              <h2>
                 <a :href="`#year-${group.year}`">{{ group.year }}</a>
-              </h1>
+              </h2>
             </div>
             <ul class="post-list">
               <PostCard

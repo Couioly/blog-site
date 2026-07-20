@@ -122,7 +122,7 @@ async function fetchPreview() {
   overflow-y: auto;
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 1rem;
   padding: 1.25rem;
   box-shadow: 0 4px 24px rgba(0,0,0,0.12);
   font-size: 0.9rem;

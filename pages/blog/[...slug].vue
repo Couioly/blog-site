@@ -59,3 +59,9 @@ useSeoMeta({
   twitterCard: 'summary',
 })
 </script>
+
+<style scoped>
+.article-body {
+  /* ContentRenderer outputs prose HTML styled by typography.css */
+}
+</style>
