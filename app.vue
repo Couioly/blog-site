@@ -1,4 +1,5 @@
 <template>
+  <LoadingScreen />
   <div class="page-container">
     <GrainOverlay />
     <SiteNav />

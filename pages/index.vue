@@ -3,8 +3,6 @@
     <HeroSection />
 
     <BlogExcerptCards v-if="recentPosts.length" :posts="recentPosts" />
-
-    <SubscribeSection />
   </div>
 </template>
 

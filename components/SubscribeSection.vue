@@ -49,7 +49,7 @@
 }
 
 .subscribe-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-size: 2.5rem;
   font-weight: 600;
   letter-spacing: -0.025em;
@@ -60,7 +60,7 @@
 }
 
 .cursive {
-  font-family: 'Reenie Beanie', cursive;
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-weight: 400;
   letter-spacing: 0;
   font-size: 1.2em;
@@ -71,6 +71,7 @@
 }
 
 .subscribe-sub {
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-size: 1rem;
   color: #78716C;
   margin: 0;
@@ -120,6 +121,6 @@
 .social-label {
   font-size: 0.8rem;
   color: #78716C;
-  font-family: 'Outfit', sans-serif;
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
 }
 </style>

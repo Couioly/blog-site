@@ -9,7 +9,7 @@
         <!-- Badge -->
         <div class="hero-badge">
           <span class="hero-badge-dot" />
-          <span>个人博客 · 记录思考与学习</span>
+          <span>欢迎来到 | JunbX工作室</span>
         </div>
 
         <!-- Headline -->
@@ -65,6 +65,7 @@
   background: rgba(255, 255, 255, 0.6);
   border: 1px solid #E7E5E4;
   border-radius: 9999px;
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-size: 0.85rem;
   color: #78716C;
   backdrop-filter: blur(8px);
@@ -79,7 +80,7 @@
 
 /* Headline */
 .hero-headline {
-  font-family: "FZShuTi", "方正舒体", "STKaiti", "楷体", serif;
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-size: 2.75rem;
   font-weight: 600;
   line-height: 1.1;
@@ -109,7 +110,7 @@
 
 /* Sub-headline */
 .hero-sub {
-  font-family: "FZShuTi", "方正舒体", "STKaiti", "楷体", serif;
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-size: 1.05rem;
   line-height: 1.6;
   color: #78716C;
@@ -136,10 +137,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.85rem 2rem;
+  padding: 0.55rem 1.5rem;
   font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-weight: 500;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   border-radius: 9999px;
   cursor: pointer;
   text-decoration: none;

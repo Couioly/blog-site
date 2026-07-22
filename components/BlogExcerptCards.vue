@@ -48,7 +48,7 @@ defineProps<{
 }
 
 .excerpt-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-size: 2.5rem;
   font-weight: 600;
   letter-spacing: -0.025em;
@@ -59,7 +59,7 @@ defineProps<{
 }
 
 .cursive {
-  font-family: 'Reenie Beanie', cursive;
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-weight: 400;
   letter-spacing: 0;
   font-size: 1.2em;
@@ -70,6 +70,7 @@ defineProps<{
 }
 
 .excerpt-sub {
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   color: #78716C;
   font-size: 1rem;
   margin: 0;
@@ -118,13 +119,14 @@ defineProps<{
 }
 
 .excerpt-date {
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-size: 0.8rem;
   color: #A8A29E;
   margin-bottom: 0.5rem;
 }
 
 .excerpt-post-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-size: 1.2rem;
   font-weight: 600;
   color: #292524;
@@ -135,6 +137,7 @@ defineProps<{
 }
 
 .excerpt-desc {
+  font-family: "FZYaoTi", "方正姚体", "Noto Serif SC", "Microsoft YaHei", sans-serif;
   font-size: 0.9rem;
   color: #78716C;
   line-height: 1.5;

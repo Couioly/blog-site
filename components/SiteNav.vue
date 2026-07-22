@@ -36,8 +36,9 @@ function navLinkClass(path: string) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: calc(100% - 32px);
-  max-width: 600px;
+  width: calc(100% - 3rem);
+  max-width: calc(820px - 3rem);
+  box-sizing: border-box;
   padding: 0.35rem 0.75rem 0.35rem 1rem;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px);
