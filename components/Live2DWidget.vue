@@ -216,4 +216,10 @@ onUnmounted(cleanup)
   cursor: pointer;
   color: var(--ph-core);
 }
+
+@media (max-width: 768px) {
+  .live2d-container {
+    display: none;
+  }
+}
 </style>
