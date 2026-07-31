@@ -15,7 +15,7 @@
       </div>
     </header>
 
-    <div class="article-body">
+    <div class="article-body prose">
       <ContentRenderer v-if="post" :value="post" />
       <p v-else>文章未找到</p>
     </div>

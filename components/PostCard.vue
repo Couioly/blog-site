@@ -31,7 +31,7 @@
           </span>
         </div>
         <p v-if="loadingPreview" class="post-preview-desc" style="opacity: 0.6;">加载预览中...</p>
-        <div v-if="previewDoc" class="post-preview-content">
+        <div v-if="previewDoc" class="post-preview-content prose">
           <ContentRenderer :value="previewDoc" />
         </div>
         <NuxtLink :to="`/blog/${post.slug}`" class="post-preview-link">阅读全文 →</NuxtLink>

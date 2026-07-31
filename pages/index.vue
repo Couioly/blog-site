@@ -41,9 +41,9 @@ function formatShortDate(dateStr: string) {
 }
 
 useSeoMeta({
-  title: 'JunbX · 博客',
+  title: 'JunbXの小作坊',
   description: '个人博客 - 记录思考与学习',
-  ogTitle: 'JunbX · 博客',
+  ogTitle: 'JunbXの小作坊',
   ogDescription: '个人博客 - 记录思考与学习',
   ogType: 'website',
   twitterCard: 'summary',

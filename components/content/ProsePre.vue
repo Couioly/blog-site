@@ -1,6 +1,11 @@
 <template>
   <div class="code-block-wrapper">
     <div class="code-block-header">
+      <span class="code-dots">
+        <i class="dot dot-red" />
+        <i class="dot dot-yellow" />
+        <i class="dot dot-green" />
+      </span>
       <span v-if="$attrs.language" class="code-lang">{{ $attrs.language }}</span>
       <span v-else class="code-lang">code</span>
       <button class="copy-btn" :class="{ copied }" @click="copy">
@@ -38,50 +43,71 @@ onUnmounted(() => {
 .code-block-wrapper {
   position: relative;
   margin: 1.5rem 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .code-block-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0.35em 0.8em;
-  background: var(--code-bg);
-  border-radius: 6px 6px 0 0;
-  border: 1px solid var(--code-border);
-  border-bottom: none;
+  gap: 0.6em;
+  padding: 0.5em 0.8em;
+  background: #f0edf1;
+  border-bottom: 1px solid var(--ph-shallow);
 }
 
+.code-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-red    { background: #ee5a5a; }
+.dot-yellow { background: #f0b94f; }
+.dot-green  { background: #5ec26d; }
+
 .code-lang {
+  flex: 1;
   font-size: 0.75rem;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-align: right;
 }
 
 .copy-btn {
   font-family: inherit;
-  font-size: 0.75rem;
-  padding: 0.2em 0.7em;
-  border: 1px solid var(--border);
+  font-size: 0.72rem;
+  padding: 0.18em 0.6em;
+  border: 1px solid var(--ph-shallow);
   border-radius: 4px;
-  background: transparent;
+  background: var(--ph-soo-shallow);
   color: var(--text-muted);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .copy-btn:hover {
-  border-color: var(--border-strong);
-  color: var(--text);
+  border-color: var(--ph-core);
+  color: var(--ph-core);
 }
 
 .copy-btn.copied {
-  border-color: #4caf50;
-  color: #4caf50;
+  border-color: #5ec26d;
+  color: #5ec26d;
 }
 
 .code-block-wrapper :deep(pre) {
   margin-top: 0;
-  border-radius: 0 0 6px 6px;
+  border-radius: 0 0 10px 10px;
+  background: #faf9fb;
 }
 </style>

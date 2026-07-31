@@ -1,0 +1,609 @@
+/* ===== Phycat Mauve — Prose Styles for Markdown Content ===== */
+
+/* ── H1: centered, gradient bottom bar ── */
+.prose h1,
+h1.prose-heading {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 1.2em auto 1em;
+  line-height: 1.4;
+  width: fit-content;
+  min-width: 120px;
+  color: #222;
+  position: relative;
+  padding-bottom: 12px;
+  border-bottom: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.prose h1::after,
+h1.prose-heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 40px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--ph-h2-gradient);
+  transform: translateX(-50%);
+  transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.prose h1:hover,
+h1.prose-heading:hover {
+  color: var(--ph-head-color);
+  transform: translateY(-2px);
+}
+
+.prose h1:hover::after,
+h1.prose-heading:hover::after {
+  width: 100%;
+}
+
+/* ── H2: gradient background pill ── */
+.prose h2,
+h2.prose-heading {
+  color: var(--ph-h2-color);
+  font-size: 1.4rem;
+  line-height: 1.5;
+  width: fit-content;
+  font-weight: 700;
+  margin: 28px 0 18px;
+  padding: 5px 14px;
+  border-radius: 8px;
+  background: var(--ph-h2-gradient);
+  background-size: 200% auto;
+  background-position: 0 center;
+  box-shadow: 0 2px 5px rgba(160, 110, 180, 0.15);
+  border-bottom: none;
+  transition: background-position 0.5s ease-out, transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.prose h2:hover,
+h2.prose-heading:hover {
+  background-position: 100% center;
+  transform: scale(1.01);
+  box-shadow: 0 8px 20px rgba(160, 110, 180, 0.35);
+}
+
+/* ── H3: left color bar + hover slide ── */
+.prose h3,
+h3.prose-heading {
+  position: relative;
+  width: fit-content;
+  margin: 20px 0;
+  font-size: 1.3rem;
+  padding-left: 14px;
+  border-bottom: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.prose h3::before,
+h3.prose-heading::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 55%;
+  border-radius: 4px;
+  background-color: var(--ph-head-color);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.prose h3:hover,
+h3.prose-heading:hover {
+  padding-left: 22px;
+  color: var(--ph-head-color);
+  cursor: pointer;
+}
+
+.prose h3:hover::before,
+h3.prose-heading:hover::before {
+  height: 62%;
+  width: 7px;
+  background-color: var(--ph-head-color);
+}
+
+/* ── H4: filled circle ── */
+.prose h4,
+h4.prose-heading {
+  margin: 20px 0;
+  font-size: 1.15rem;
+  border-bottom: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.prose h4::before,
+h4.prose-heading::before {
+  content: "";
+  margin-right: 7px;
+  display: inline-block;
+  background-color: var(--ph-head-color);
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  border: 1px solid var(--ph-head-color);
+  vertical-align: middle;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.prose h4:hover,
+h4.prose-heading:hover {
+  color: var(--ph-deep);
+  transform: translateX(6px);
+}
+
+.prose h4:hover::before,
+h4.prose-heading:hover::before {
+  transform: scale(1.3);
+  box-shadow: 0 0 0 4px var(--ph-soo-shallow);
+}
+
+/* ── H5: hollow circle ── */
+.prose h5,
+h5.prose-heading {
+  margin: 22px 0;
+  font-size: 1.1rem;
+  border-bottom: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.prose h5::before,
+h5.prose-heading::before {
+  content: "";
+  margin-right: 7px;
+  display: inline-block;
+  background-color: #fff;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  border: 2px solid var(--ph-head-color);
+  vertical-align: middle;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.prose h5:hover,
+h5.prose-heading:hover {
+  color: var(--ph-deep);
+  transform: translateX(6px);
+}
+
+.prose h5:hover::before,
+h5.prose-heading:hover::before {
+  background-color: var(--ph-head-color);
+  transform: scale(1.2);
+  box-shadow: 0 0 0 3px var(--ph-soo-shallow);
+}
+
+/* ── H6: dash prefix ── */
+.prose h6,
+h6.prose-heading {
+  margin: 22px 0;
+  font-size: 1.05rem;
+  border-bottom: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.prose h6::before,
+h6.prose-heading::before {
+  content: "-";
+  color: var(--ph-head-color);
+  margin-right: 7px;
+  display: inline-block;
+  vertical-align: middle;
+  transition: transform 0.3s ease, font-weight 0.3s ease;
+}
+
+.prose h6:hover,
+h6.prose-heading:hover {
+  color: var(--ph-deep);
+  transform: translateX(6px);
+}
+
+.prose h6:hover::before,
+h6.prose-heading:hover::before {
+  transform: scaleX(1.8);
+  font-weight: 700;
+}
+
+/* ── Links: icon rotation on hover ── */
+.prose a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 2px 4px;
+  margin: 0 -2px;
+  border-radius: 4px;
+  background: none;
+  border-bottom: none;
+  transition: all 0.2s ease;
+}
+
+.prose a::before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 2px;
+  vertical-align: -0.15em;
+  background-color: var(--ph-core);
+  mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M477.934459 330.486594A50.844091 50.844091 0 0 1 406.752731 258.796425L512 152.532274a254.220457 254.220457 0 0 1 359.467726 359.467726L762.66137 618.772592a50.844091 50.844091 0 1 1-71.690168-71.690169l106.772591-106.772592a152.532274 152.532274 0 0 0-215.578947-215.578947z m70.164846 361.501489A50.844091 50.844091 0 1 1 619.789474 762.66137l-107.281033 107.281033A254.220457 254.220457 0 0 1 152.532274 512L259.813307 406.752731a50.844091 50.844091 0 1 1 72.19861 69.656405l-107.789474 107.281033a152.532274 152.532274 0 0 0 215.578947 215.578947z m-126.601788-16.77855a50.844091 50.844091 0 1 1-71.690168-71.690169l251.678252-251.678252a50.844091 50.844091 0 0 1 71.690169 71.690169z'/%3E%3C/svg%3E") no-repeat center/contain;
+  -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M477.934459 330.486594A50.844091 50.844091 0 0 1 406.752731 258.796425L512 152.532274a254.220457 254.220457 0 0 1 359.467726 359.467726L762.66137 618.772592a50.844091 50.844091 0 1 1-71.690168-71.690169l106.772591-106.772592a152.532274 152.532274 0 0 0-215.578947-215.578947z m70.164846 361.501489A50.844091 50.844091 0 1 1 619.789474 762.66137l-107.281033 107.281033A254.220457 254.220457 0 0 1 152.532274 512L259.813307 406.752731a50.844091 50.844091 0 1 1 72.19861 69.656405l-107.789474 107.281033a152.532274 152.532274 0 0 0 215.578947 215.578947z m-126.601788-16.77855a50.844091 50.844091 0 1 1-71.690168-71.690169l251.678252-251.678252a50.844091 50.844091 0 0 1 71.690169 71.690169z'/%3E%3C/svg%3E") no-repeat center/contain;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.prose a:hover {
+  color: var(--ph-deep);
+  background: var(--ph-soo-shallow);
+}
+
+.prose a:hover::before {
+  transform: rotate(180deg);
+  background-color: var(--ph-deep);
+}
+
+.prose a:visited {
+  color: var(--ph-deep);
+}
+
+/* Supress link icon for footnotes */
+.prose sup a::before {
+  content: none;
+}
+
+/* ── Inline Code ── */
+.prose code:not(pre code) {
+  font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 0.9em;
+  letter-spacing: 0.5px;
+  color: var(--ph-code-color);
+  background-color: var(--ph-code-bg);
+  padding: 3px 6px;
+  margin: 0 2px;
+  border-radius: 6px;
+  border: none;
+  vertical-align: middle;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.prose code:not(pre code):hover {
+  background-color: var(--ph-core);
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px var(--ph-so-shallow);
+}
+
+/* ── Bold ── */
+.prose strong {
+  color: var(--ph-core);
+  font-weight: 700;
+  display: inline;
+  position: relative;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.prose strong:hover {
+  color: var(--ph-core);
+  border-bottom-color: var(--ph-shallow);
+  text-shadow: 0 2px 8px var(--ph-so-shallow);
+}
+
+/* ── Italic ── */
+.prose em {
+  font-style: italic;
+  color: #555;
+  text-decoration: none !important;
+  padding: 0 2px 1px;
+  transition: color 0.2s ease;
+}
+
+.prose em:hover {
+  color: var(--ph-core);
+}
+
+/* ── Strikethrough ── */
+.prose del {
+  text-decoration: line-through;
+  text-decoration-color: var(--ph-core);
+  color: #999;
+  transition: all 0.3s ease;
+}
+
+.prose del:hover {
+  opacity: 0.6;
+  text-decoration-color: var(--ph-deep);
+}
+
+/* ── Blockquote: card with ✨ ── */
+.prose blockquote {
+  position: relative;
+  margin: 20px 0;
+  padding: 18px 20px 18px 48px;
+  background-color: var(--ph-soo-shallow);
+  border: none;
+  border-left: none;
+  border-radius: 16px;
+  color: #555;
+  line-height: 1.6;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
+}
+
+.prose blockquote::before {
+  content: "✨";
+  position: absolute;
+  left: 16px;
+  top: 18px;
+  font-size: 20px;
+  line-height: 1;
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+}
+
+.prose blockquote p {
+  color: #555;
+  margin-bottom: 0.5em;
+}
+
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.prose blockquote:hover {
+  transform: scale(1.02);
+}
+
+/* ── HR: dashed, widens on hover ── */
+.prose hr {
+  border: none;
+  border-top: 3px dashed var(--ph-shallow);
+  margin: 30px 0;
+  opacity: 0.6;
+  transform: scaleX(0.8);
+  transition: all 0.4s ease;
+}
+
+.prose hr:hover {
+  transform: scaleX(1);
+  border-color: var(--ph-core);
+  opacity: 1;
+}
+
+/* ── Images ── */
+.prose img {
+  border-radius: 12px;
+  display: inline-block;
+  margin: 15px 5px;
+  object-fit: contain;
+  filter: brightness(1) contrast(1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 100%;
+  cursor: zoom-in;
+}
+
+.prose p > img:only-child {
+  display: block;
+  margin: 20px auto;
+}
+
+.prose img:hover {
+  filter: brightness(1.05) contrast(1.05);
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px -4px var(--ph-so-shallow);
+  z-index: 10;
+}
+
+/* ── Tables: rounded, row hover ── */
+.prose table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  margin: 20px 0;
+  border: 1px solid var(--ph-shallow);
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.prose table th,
+.prose table td {
+  padding: 8px 12px;
+  color: #333;
+  border-right: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+}
+
+.prose table th:last-child,
+.prose table td:last-child {
+  border-right: none;
+}
+
+.prose table tr:last-child td {
+  border-bottom: none;
+}
+
+.prose table th {
+  background-color: var(--ph-soo-shallow);
+  color: var(--ph-deep);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.prose table tbody tr:hover td {
+  background-color: var(--ph-soo-shallow);
+}
+
+.prose table tbody td:hover {
+  background-color: var(--ph-so-shallow);
+  color: var(--ph-deep);
+  box-shadow: inset 0 0 0 1px var(--ph-shallow);
+  cursor: default;
+}
+
+/* ── Lists: colored markers, nesting ── */
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ul ul {
+  list-style-type: circle;
+}
+
+.prose ul ul ul {
+  list-style-type: square;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+.prose ol ol {
+  list-style-type: lower-alpha;
+}
+
+.prose ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.prose ::marker {
+  color: var(--ph-deep);
+}
+
+.prose li {
+  margin: 0.4rem 0;
+}
+
+/* ── Task Lists: custom checkbox animation ── */
+.prose .task-list-item {
+  list-style: none;
+  position: relative;
+}
+
+.prose .task-list-item input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  position: absolute;
+  top: 2px;
+  left: -1.5em;
+  outline: 0;
+  cursor: pointer;
+  z-index: 1;
+  margin: 0;
+}
+
+.prose .task-list-item input[type="checkbox"]::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid var(--ph-deep);
+  background: #fff;
+  transition: all 0.4s cubic-bezier(0.5, 1.6, 0.4, 0.7);
+  box-sizing: border-box;
+}
+
+.prose .task-list-item input[type="checkbox"]::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 0.35rem;
+  height: 0.65rem;
+  border: solid #fff;
+  border-width: 0 2.5px 2.5px 0;
+  transform: translate(-50%, -60%) rotate(45deg) scale(1);
+  transition: all 0.3s cubic-bezier(0.5, 1.6, 0.4, 0.7);
+  opacity: 0;
+}
+
+.prose .task-list-item input[type="checkbox"]:checked::before {
+  background: var(--ph-core);
+  border-color: var(--ph-core);
+  transform: scale(1.05);
+  animation: ph-task-pulse 0.4s forwards;
+}
+
+@keyframes ph-task-pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.prose .task-list-item input[type="checkbox"]:checked::after {
+  opacity: 1;
+  transform: translate(-50%, -60%) rotate(45deg) scale(1);
+}
+
+.prose .task-list-item input[type="checkbox"]:checked + p,
+.prose .task-list-item input[type="checkbox"]:checked + span {
+  color: #bbb;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 50%;
+  background-size: 100% 1.5px;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s ease;
+}
+
+/* ── Kbd ── */
+.prose kbd {
+  display: inline-block;
+  min-width: 1.6em;
+  text-align: center;
+  padding: 3px 6px;
+  margin: 0 4px;
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.9em;
+  line-height: 1.4;
+  font-weight: 600;
+  border-radius: 4px;
+  background-color: #fff;
+  color: var(--ph-deep);
+  border: 1px solid var(--ph-core);
+  border-bottom-width: 3px;
+  box-shadow: 0 2px 0 var(--ph-so-shallow);
+  transition: all 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform: translateY(0);
+}
+
+.prose kbd:hover {
+  border-bottom-width: 1px;
+  transform: translateY(2px);
+  background-color: var(--ph-soo-shallow);
+  box-shadow: 0 0 0 transparent;
+  color: var(--ph-deep);
+}
+
+/* ── Mark / highlight ── */
+.prose mark {
+  background-color: transparent;
+  color: inherit;
+  padding: 0 2px;
+  margin: 0;
+  border-radius: 4px;
+  font-weight: inherit;
+  position: relative;
+  background-image: linear-gradient(to top, var(--ph-so-shallow), var(--ph-so-shallow));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 40%;
+  transition: background-size 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease, border-radius 0.3s ease;
+}
+
+.prose mark:hover {
+  background-size: 100% 100%;
+  border-radius: 6px;
+}

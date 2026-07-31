@@ -20,6 +20,9 @@
       <a href="https://space.bilibili.com/3707030822980416" target="_blank" rel="noopener" title="Bilibili">
         <img src="/bilibili.svg" alt="Bilibili" />
       </a>
+      <span class="social-btn" title="公众号" @click.stop="showQr('gzh', $event)">
+        <img src="/公众号.svg" alt="公众号" />
+      </span>
       <span class="social-btn" title="微信" @click.stop="showQr('weixin', $event)">
         <img src="/微信.svg" alt="微信" />
       </span>
@@ -65,7 +68,7 @@ function showQr(type: string, e: MouseEvent) {
     return
   }
   qr.alt = type
-  qr.src = type === 'weixin' ? '/weixin.png' : '/qq.png'
+  qr.src = type === 'weixin' ? '/weixin.png' : type === 'qq' ? '/qq.png' : '/公众号.jpg'
   qr.x = e.clientX - 100
   qr.y = e.clientY - 200
   qr.show = true

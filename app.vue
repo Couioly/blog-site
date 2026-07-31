@@ -7,5 +7,7 @@
       <NuxtPage />
     </main>
     <SiteFooter />
+    <BeianBar />
+    <Live2DWidget />
   </div>
 </template>

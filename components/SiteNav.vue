@@ -3,7 +3,7 @@
     <div class="site-nav-logo">
       <a href="/" class="flex items-center gap-2.5 no-underline border-none">
         <span class="logo-dot" />
-        <span class="text-[13px] font-medium text-stone-800">JunbX</span>
+        <span class="text-[13px] font-medium text-stone-800">JunbXの小作坊</span>
       </a>
     </div>
     <div class="site-nav-links">

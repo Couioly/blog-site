@@ -1,6 +1,19 @@
 <template>
   <footer class="site-footer">
-    <p class="footer-text">JunbX · 记录日常与思考</p>
+    <div class="footer-left">
+      <ClientOnly>
+        <div class="site-counters">
+          <p class="counter-item">
+            <span class="counter-label">网站运行时长：</span>
+            <span class="counter-value">{{ runtime }}</span>
+          </p>
+          <p class="counter-item">
+            <span class="counter-label">总访客：</span>
+            <span class="counter-value">{{ visitors }}</span>
+          </p>
+        </div>
+      </ClientOnly>
+    </div>
     <div class="footer-social">
       <a href="https://github.com/Couioly" target="_blank" rel="noopener" title="GitHub">
         <img src="/github.svg" alt="GitHub" />
@@ -14,6 +27,9 @@
       <a href="https://space.bilibili.com/3707030822980416" target="_blank" rel="noopener" title="Bilibili">
         <img src="/bilibili.svg" alt="Bilibili" />
       </a>
+      <span class="social-icon-btn" title="公众号" @click.stop="showQr('gzh', $event)">
+        <img src="/公众号.svg" alt="公众号" />
+      </span>
       <span class="social-icon-btn" title="微信" @click.stop="showQr('weixin', $event)">
         <img src="/微信.svg" alt="微信" />
       </span>
@@ -52,11 +68,46 @@ function showQr(type: string, e: MouseEvent) {
     return
   }
   qr.alt = type
-  qr.src = type === 'weixin' ? '/weixin.png' : '/qq.png'
+  qr.src = type === 'weixin' ? '/weixin.png' : type === 'qq' ? '/qq.png' : '/公众号.jpg'
   qr.x = e.clientX - 100
   qr.y = e.clientY - 200
   qr.show = true
 }
+
+// ---- Counters ----
+const SITE_START = new Date('2026-07-01T00:00:00').getTime()
+const STORAGE_KEY = 'site_visitor_count'
+
+const runtime = ref('')
+const visitors = ref(0)
+
+function updateRuntime() {
+  const diff = Date.now() - SITE_START
+  if (diff < 0) { runtime.value = '0天0时0分0秒'; return }
+  const totalSec = Math.floor(diff / 1000)
+  const d = Math.floor(totalSec / 86400)
+  const h = Math.floor((totalSec % 86400) / 3600)
+  const m = Math.floor((totalSec % 3600) / 60)
+  const s = totalSec % 60
+  runtime.value = `${d}天${h}时${m}分${s}秒`
+}
+
+let timer: ReturnType<typeof setInterval> | null = null
+
+onMounted(() => {
+  updateRuntime()
+  timer = setInterval(updateRuntime, 1000)
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    const count = stored ? parseInt(stored, 10) : 0
+    visitors.value = count + 1
+    localStorage.setItem(STORAGE_KEY, String(visitors.value))
+  } catch { visitors.value = 1 }
+})
+
+onUnmounted(() => {
+  if (timer) clearInterval(timer)
+})
 </script>
 
 <style scoped>
@@ -69,10 +120,28 @@ function showQr(type: string, e: MouseEvent) {
   border-top: 1px solid #E7E5E4;
 }
 
-.footer-text {
-  color: #78716C;
-  font-size: 0.85rem;
+.site-counters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+}
+
+.counter-item {
   margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.counter-label {
+  font-family: "FZYaoTi", "方正姚体", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+}
+
+.counter-value {
+  font-family: Georgia, "Times New Roman", serif;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  color: var(--text-secondary);
 }
 
 .footer-social {
