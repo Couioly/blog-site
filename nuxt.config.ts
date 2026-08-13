@@ -1,25 +1,10 @@
 export default defineNuxtConfig({
   ssr: true,
-  target: 'static',
 
-  modules: ['@nuxt/content', '@nuxtjs/sitemap', '@nuxtjs/tailwindcss'],
+  modules: ['@nuxtjs/tailwindcss'],
 
   site: {
     url: 'https://junbx.cn',
-  },
-
-  content: {
-    build: {
-      markdown: {
-        toc: { depth: 3, searchDepth: 3 },
-      },
-    },
-    highlight: {
-      theme: {
-        default: 'github-light',
-        dark: 'github-dark',
-      },
-    },
   },
 
   app: {

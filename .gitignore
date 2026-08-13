@@ -33,3 +33,5 @@ pnpm-debug.log*
 
 # 排除项
 other/
+admin-backend/
+public/images/fragments/TwodaytourofXian/大雁塔音乐喷泉.mp4

@@ -32,36 +32,30 @@ useSeoMeta({
   twitterCard: 'summary',
 })
 
-const { data: posts } = await useAsyncData(`tag-${tag}`, () =>
-  queryContent<{
-    title: string
-    date: string
-    description?: string
-    tags?: string[]
-    _path: string
-  }>('/blog')
-    .sort({ date: -1 })
-    .find()
-)
+interface TagBlogItem {
+  slug: string
+  title: string
+  date: string
+  description: string
+  tags: string[]
+}
+
+const { data: posts } = await useFetch<TagBlogItem[]>('/api/blog', {
+  query: { tag },
+})
 
 const filteredPosts = computed<PostMeta[]>(() => {
   if (!posts.value) return []
-  return posts.value
-    .filter((p) => {
-      const pTags = p.tags || []
-      return pTags.some((t) => t === tag)
-    })
-    .map((p) => {
-      const slug = p._path.replace(/^\/blog\//, '')
-      const d = new Date(p.date || '')
-      return {
-        title: p.title || slug,
-        date: p.date || '',
-        slug,
-        description: p.description,
-        tags: p.tags,
-        year: d.getFullYear() || new Date().getFullYear(),
-      }
-    })
+  return posts.value.map((p) => {
+    const d = new Date(p.date || '')
+    return {
+      title: p.title || p.slug,
+      date: p.date || '',
+      slug: p.slug,
+      description: p.description,
+      tags: p.tags,
+      year: d.getFullYear() || new Date().getFullYear(),
+    }
+  })
 })
 </script>

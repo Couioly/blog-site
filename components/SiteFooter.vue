@@ -4,12 +4,8 @@
       <ClientOnly>
         <div class="site-counters">
           <p class="counter-item">
-            <span class="counter-label">网站运行时长：</span>
+            <span class="counter-label"><img src="/在线.svg" alt="" class="footer-inline-icon" /> 网站运行时长：</span>
             <span class="counter-value">{{ runtime }}</span>
-          </p>
-          <p class="counter-item">
-            <span class="counter-label">总访客：</span>
-            <span class="counter-value">{{ visitors }}</span>
           </p>
         </div>
       </ClientOnly>
@@ -76,10 +72,8 @@ function showQr(type: string, e: MouseEvent) {
 
 // ---- Counters ----
 const SITE_START = new Date('2026-07-01T00:00:00').getTime()
-const STORAGE_KEY = 'site_visitor_count'
 
 const runtime = ref('')
-const visitors = ref(0)
 
 function updateRuntime() {
   const diff = Date.now() - SITE_START
@@ -97,12 +91,6 @@ let timer: ReturnType<typeof setInterval> | null = null
 onMounted(() => {
   updateRuntime()
   timer = setInterval(updateRuntime, 1000)
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    const count = stored ? parseInt(stored, 10) : 0
-    visitors.value = count + 1
-    localStorage.setItem(STORAGE_KEY, String(visitors.value))
-  } catch { visitors.value = 1 }
 })
 
 onUnmounted(() => {
@@ -131,10 +119,24 @@ onUnmounted(() => {
   font-size: 0.82rem;
   color: var(--text-muted);
   line-height: 1.5;
+  white-space: nowrap;
 }
 
 .counter-label {
   font-family: "FZYaoTi", "方正姚体", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+}
+
+.footer-inline-icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex-shrink: 0;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  vertical-align: middle;
 }
 
 .counter-value {

@@ -167,14 +167,14 @@ Failed to connect to github.com port 443: Could not connect to server
 
 **核心原因**
 
-使用 `v2rayN` 代理工具导致本地网络无法正常访问 `GitHub HTTPS` 端口（443），Git 未配置代理导致连接失败。
+本地网络环境导致无法正常访问 `GitHub HTTPS` 端口（443），Git 未针对当前网络环境配置导致连接失败。
 
 **最终解决方案**
 
 通过 Git 全局代理配置 解决，执行以下命令，配置完成后，重新执行 `git push/pull` 即可正常连接 GitHub。
 
 ```bash
-# 配置 Git 全局 HTTP/HTTPS 代理（替换为自己的本地代理端口，v2rayN常用 10808）
+# 配置 Git 全局 HTTP/HTTPS 代理（替换为自己的本地代理端口）
 git config --global http.proxy http://127.0.0.1:10808 # 该问题当我执行这条指令后就已解决问题
 git config --global https.proxy http://127.0.0.1:10808
 ```
@@ -195,7 +195,7 @@ git config --global --get https.proxy
 
 **适用场景**
 
-本地开启了科学上网，浏览器可访问 GitHub，但 Git 命令行连接失败的情况。
+本地网络环境可访问 GitHub（如浏览器），但 Git 命令行连接失败的情况。
 
 > 总结
 > 问题：Git 连接 GitHub 443 端口被重置，网络不通
@@ -204,7 +204,7 @@ git config --global --get https.proxy
 
 #### 切换HTTPS至Git连接
 
-**代理 + `GitHub HTTPS` 连接被强制重置，根本推不上去**，可以尝试直接改用 `SSH` 推送（彻底绕开 `HTTPS` 被拦截的问题）
+**`HTTPS` 连接被强制重置，无法推送**，可以尝试直接改用 `SSH` 推送（通过 `SSH` 协议推送代码）
 
 1. **生成 SSH 密钥**（一路回车，不用输密码）
 

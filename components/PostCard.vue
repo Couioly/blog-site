@@ -31,9 +31,7 @@
           </span>
         </div>
         <p v-if="loadingPreview" class="post-preview-desc" style="opacity: 0.6;">加载预览中...</p>
-        <div v-if="previewDoc" class="post-preview-content prose">
-          <ContentRenderer :value="previewDoc" />
-        </div>
+        <div v-if="previewHtml" class="post-preview-content prose" v-html="previewHtml" />
         <NuxtLink :to="`/blog/${post.slug}`" class="post-preview-link">阅读全文 →</NuxtLink>
       </div>
     </Teleport>
@@ -56,7 +54,7 @@ const formattedDate = computed(() => {
 const showPreview = ref(false)
 const popupX = ref(0)
 const popupY = ref(0)
-const previewDoc = ref(null)
+const previewHtml = ref('')
 const loadingPreview = ref(false)
 let timer: ReturnType<typeof setTimeout> | null = null
 let closeTimer: ReturnType<typeof setTimeout> | null = null
@@ -70,19 +68,34 @@ function startPreview(e: MouseEvent) {
   if (timer) { clearTimeout(timer); timer = null }
   if (closeTimer) { clearTimeout(closeTimer); closeTimer = null }
   timer = setTimeout(() => {
-    popupX.value = e.clientX + 12
-    popupY.value = e.clientY + 12
+    const popupW = 320
+    let x = e.clientX + 12
+    let y = e.clientY + 12
+
+    // 边界检测：超出右边界则翻到鼠标左侧
+    if (x + popupW > window.innerWidth - 16) {
+      x = e.clientX - popupW - 12
+    }
+    // 超出下边界则向上偏移
+    if (y + 420 > window.innerHeight - 16) {
+      y = window.innerHeight - 420 - 16
+    }
+    // 不超出左/上边界
+    if (x < 16) x = 16
+    if (y < 16) y = 16
+
+    popupX.value = x
+    popupY.value = y
     showPreview.value = true
     fetchPreview()
   }, 2000)
 }
 
 function scheduleClose() {
-  // Delay close so the user can move into the popup
   if (timer) { clearTimeout(timer); timer = null }
   closeTimer = setTimeout(() => {
     showPreview.value = false
-    previewDoc.value = null
+    previewHtml.value = ''
     loadingPreview.value = false
   }, 200)
 }
@@ -92,21 +105,22 @@ function cancelClose() {
 }
 
 function closePreview() {
-  // Close when mouse leaves the popup
   if (closeTimer) { clearTimeout(closeTimer); closeTimer = null }
   showPreview.value = false
-  previewDoc.value = null
+  previewHtml.value = ''
   loadingPreview.value = false
 }
 
 async function fetchPreview() {
   loadingPreview.value = true
   try {
-    const doc = await queryContent(`/blog/${props.post.slug}`).findOne()
-    if (doc) {
-      previewDoc.value = doc
-      loadingPreview.value = false
+    const data = await $fetch<{ html?: string; description?: string }>(`/api/blog/${props.post.slug}?preview=1`)
+    if (data?.html) {
+      previewHtml.value = data.html
+    } else if (data?.description) {
+      previewHtml.value = `<p>${data.description}</p>`
     }
+    loadingPreview.value = false
   } catch {
     loadingPreview.value = false
   }
@@ -117,8 +131,8 @@ async function fetchPreview() {
 .post-preview-popup {
   position: fixed;
   z-index: 1000;
-  width: 360px;
-  max-height: 420px;
+  width: 320px;
+  max-height: 380px;
   overflow-y: auto;
   background: var(--bg);
   border: 1px solid var(--border);

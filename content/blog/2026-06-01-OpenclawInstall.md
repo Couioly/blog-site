@@ -58,7 +58,7 @@ OpenClaw 主程序安装成功后，会启动安装向导（Setup Wizard）。
 
 ![1780145568920](/images/blog/openclaw-install/1780145568920.png)
 
-**解决方法**：修改代理为 `Tun` 模式（全局代理），重新执行登录命令：
+**解决方法**：切换至合规国际专线对应的网络环境，重新执行登录命令：
 
 ```powershell
 openclaw models auth login --provider openai-codex

@@ -18,22 +18,141 @@ const error = ref(false)
 const widgetW = ref(500)
 const widgetH = ref(500)
 
-const phrases = [
-  '你的手离我远点ಠಿ_ಠ',
-  '喂，110吗？有人骚扰我ಥ_ಥ',
-  '不要动手动脚的，规矩一点＞﹏＜',
-  '再碰我黑掉你的电脑(σ｀д′)σ',
-]
+// ==================== AI Bubble ====================
 
 const bubble = reactive({
   show: false,
   text: '',
 })
 
+let hovering = false
+let idleTimer: ReturnType<typeof setTimeout> | null = null
+let hideTimer: ReturnType<typeof setTimeout> | null = null
+let hoverDebounceTimer: ReturnType<typeof setTimeout> | null = null
+
+// 降级短语（API 不可用时使用）
+const fallbackHover = [
+  '[害羞] 诶嘿~不要碰Laffey啦...',
+  '[委屈] 呜...你不是主人，不要乱摸...',
+  '[病娇] 只有主人才能碰Laffey哦...',
+  '[紧张] 啊呜...Laffey要告诉主人了！',
+]
+
+const fallbackIdle = [
+  '[发呆] 呜...主人什么时候回来呀...',
+  '[委屈] 好无聊呢，Laffey想主人了...',
+  '[困] 啊呜...有点想睡觉了...',
+  '[期待] 主人会不会突然出现呢～',
+  '[失落] 又是没人陪Laffey的一天...',
+  '[发呆] 数羊羊...一只主人...两只主人...',
+]
+
+function getFallbackBubble(type: 'idle' | 'hover'): string {
+  const pool = type === 'hover' ? fallbackHover : fallbackIdle
+  return pool[Math.floor(Math.random() * pool.length)]
+}
+
+// AI 气泡缓存（避免相同类型在短时间内重复请求）
+let lastBubbleType: 'idle' | 'hover' | null = null
+let lastBubbleTime = 0
+
+async function fetchAIBubble(type: 'idle' | 'hover'): Promise<string> {
+  // 极短冷却仅防止快速连续触发（如 hover 快速进出）
+  const now = Date.now()
+  if (type === lastBubbleType && now - lastBubbleTime < 2000) {
+    return getFallbackBubble(type)
+  }
+
+  lastBubbleType = type
+  lastBubbleTime = now
+
+  try {
+    const pageTitle = document.title || undefined
+    const res = await $fetch<{ text: string }>('/api/chat/ai-bubble', {
+      method: 'POST',
+      body: { type, pageTitle },
+      timeout: 8000,
+    })
+    return res.text || getFallbackBubble(type)
+  } catch {
+    return getFallbackBubble(type)
+  }
+}
+
+// ==================== Bubble Display Logic ====================
+
+function showBubble(text: string) {
+  if (hideTimer) {
+    clearTimeout(hideTimer)
+    hideTimer = null
+  }
+  bubble.text = text
+  bubble.show = true
+}
+
+function hideBubble() {
+  bubble.show = false
+}
+
+// 悬停气泡（带防抖）
+async function handleMouseEnter() {
+  hovering = true
+  if (hideTimer) {
+    clearTimeout(hideTimer)
+    hideTimer = null
+  }
+
+  // 防抖：300ms 内不重复触发
+  if (hoverDebounceTimer) return
+  hoverDebounceTimer = setTimeout(async () => {
+    hoverDebounceTimer = null
+    if (!hovering) return
+    const text = await fetchAIBubble('hover')
+    if (hovering) showBubble(text)
+  }, 300)
+}
+
+function handleMouseLeave() {
+  hovering = false
+  if (hoverDebounceTimer) {
+    clearTimeout(hoverDebounceTimer)
+    hoverDebounceTimer = null
+  }
+  hideBubble()
+  scheduleIdle()
+}
+
+// 空闲气泡
+function scheduleIdle() {
+  if (idleTimer) clearTimeout(idleTimer)
+  const delay = 10000 + Math.random() * 10000 // 10~20s
+  idleTimer = setTimeout(async () => {
+    if (hovering || bubble.show) {
+      scheduleIdle()
+      return
+    }
+    const text = await fetchAIBubble('idle')
+    if (!hovering && !bubble.show) {
+      showBubble(text)
+      hideTimer = setTimeout(() => {
+        hideBubble()
+        hideTimer = null
+        scheduleIdle()
+      }, 5000)
+    } else {
+      scheduleIdle()
+    }
+  }, delay)
+}
+
+// ==================== Container Style ====================
+
 const containerStyle = computed(() => ({
   width: `${widgetW.value}px`,
   height: `${widgetH.value}px`,
 }))
+
+// ==================== Live2D Initialization ====================
 
 let app: any = null
 let model: any = null
@@ -90,13 +209,11 @@ async function initLive2D() {
     // Scale to fit
     const mw = model.internalModel.width
     const mh = model.internalModel.height
-    // Scale: make model 360px tall, then size canvas around it
     const targetH = 300
     const s = targetH / mh
     model.scale.set(s)
     const modelW = mw * s
     const modelH = mh * s
-    // Asymmetric padding: model hugs left, room on right for safety
     const padLeft = 0
     const padRight = 0
     const padTop = 140
@@ -111,25 +228,29 @@ async function initLive2D() {
 
     app.stage.addChild(model)
 
-    // ---- Hover → speech bubble (model-level, not canvas) ----
+    // ---- Mouse interaction ----
     const canvas = app.view
     canvas.style.cursor = 'pointer'
 
-    model.on('mouseover', () => {
-      bubble.text = phrases[Math.floor(Math.random() * phrases.length)]
-      bubble.show = true
-    })
-    model.on('mouseout', () => {
-      bubble.show = false
-    })
+    model.on('mouseover', handleMouseEnter)
+    model.on('mouseout', handleMouseLeave)
+
+    // ---- Idle bubbles ----
+    scheduleIdle()
 
     // ---- Tap → motion ----
     let tapBusy = false
     canvas.addEventListener('click', () => {
       if (tapBusy) return
       tapBusy = true
-      setTimeout(() => { tapBusy = false }, 400)
-      try { model.motion('main_1') } catch { /* */ }
+      setTimeout(() => {
+        tapBusy = false
+      }, 400)
+      try {
+        model.motion('main_1')
+      } catch {
+        /* */
+      }
     })
 
     loading.value = false
@@ -146,8 +267,34 @@ function retry() {
 }
 
 function cleanup() {
-  if (model) { try { model.destroy() } catch { /* */ } model = null }
-  if (app) { try { app.destroy(false, { children: true }) } catch { /* */ } app = null }
+  if (idleTimer) {
+    clearTimeout(idleTimer)
+    idleTimer = null
+  }
+  if (hideTimer) {
+    clearTimeout(hideTimer)
+    hideTimer = null
+  }
+  if (hoverDebounceTimer) {
+    clearTimeout(hoverDebounceTimer)
+    hoverDebounceTimer = null
+  }
+  if (model) {
+    try {
+      model.destroy()
+    } catch {
+      /* */
+    }
+    model = null
+  }
+  if (app) {
+    try {
+      app.destroy(false, { children: true })
+    } catch {
+      /* */
+    }
+    app = null
+  }
   if (containerRef.value) containerRef.value.innerHTML = ''
 }
 
@@ -166,19 +313,21 @@ onUnmounted(cleanup)
 
 .speech-bubble {
   position: absolute;
-  top: 18%;
-  margin-top: 120px;
+  bottom: 62%;
   left: 50%;
   transform: translateX(-50%);
-  padding: 8px 14px;
+  padding: 6px 12px;
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--ph-shallow);
-  border-radius: 14px;
-  font-size: 0.82rem;
+  border-radius: 12px;
+  font-size: 0.78rem;
   color: #333;
-  white-space: nowrap;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   pointer-events: none;
+  max-width: 200px;
+  word-break: break-word;
+  text-align: center;
+  line-height: 1.35;
 }
 
 .speech-bubble::after {
@@ -187,14 +336,23 @@ onUnmounted(cleanup)
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-top-color: rgba(255, 255, 255, 0.92);
 }
 
-.bubble-enter-active { transition: opacity 0.25s ease, transform 0.25s ease; }
-.bubble-leave-active { transition: opacity 0.15s ease; }
-.bubble-enter-from { opacity: 0; transform: translateX(-50%) translateY(6px); }
-.bubble-leave-to   { opacity: 0; }
+.bubble-enter-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.bubble-leave-active {
+  transition: opacity 0.15s ease;
+}
+.bubble-enter-from {
+  opacity: 0;
+  transform: translateX(-50%) translateY(6px);
+}
+.bubble-leave-to {
+  opacity: 0;
+}
 
 .live2d-loading,
 .live2d-error {

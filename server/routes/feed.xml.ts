@@ -1,4 +1,12 @@
-import { serverQueryContent } from '#content/server'
+import { query as dbQuery } from '../utils/db'
+import type { RowDataPacket } from 'mysql2/promise'
+
+interface BlogRow extends RowDataPacket {
+  slug: string
+  title: string
+  date: string
+  description: string
+}
 
 const SITE_URL = 'https://junbx.cn'
 
@@ -7,18 +15,17 @@ function escapeXml(s: string): string {
 }
 
 export default defineEventHandler(async (event) => {
-  const posts = await serverQueryContent(event, '/blog')
-    .sort({ date: -1 })
-    .find()
+  const rows = await dbQuery<BlogRow[]>(
+    'SELECT slug, title, date, description FROM blog ORDER BY date DESC LIMIT 50'
+  )
 
-  const items = posts
+  const items = rows
     .filter((p) => p.date && p.title)
     .map((p) => {
-      const slug = (p._path as string).replace(/^\/blog\//, '')
-      const url = `${SITE_URL}/blog/${slug}`
-      const date = new Date(p.date as string).toISOString()
-      const title = escapeXml(p.title as string)
-      const desc = escapeXml((p.description as string) || title)
+      const url = `${SITE_URL}/blog/${p.slug}`
+      const date = new Date(p.date).toISOString()
+      const title = escapeXml(p.title)
+      const desc = escapeXml(p.description || title)
 
       return `    <item>
       <title>${title}</title>

@@ -9,5 +9,6 @@
     <SiteFooter />
     <BeianBar />
     <Live2DWidget />
+    <ChatPanel />
   </div>
 </template>

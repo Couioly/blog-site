@@ -49,7 +49,7 @@ powershell -c "irm https://openclaw.ai/install.ps1 | iex"
 
 浏览器显示 `Authentication successful`，登录成功了。但 OpenClaw 本地进程向 OpenAI 换取访问令牌时，被拒绝了——判断为来自不支持的地区或网络线路。
 
-**解决方法**：把代理改成 `Tun` 模式（全局代理），重新执行登录命令：
+**解决方法**：切换至合规国际专线对应的网络环境，重新执行登录命令：
 
 ```powershell
 openclaw models auth login --provider openai-codex

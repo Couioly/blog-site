@@ -7,25 +7,23 @@
 </template>
 
 <script setup lang="ts">
-// Fetch all blog posts for landing page sections
-const { data: posts } = await useAsyncData('landing-posts', () =>
-  queryContent<{
-    title: string
-    date: string
-    description?: string
-    tags?: string[]
-    _path: string
-  }>('/blog')
-    .sort({ date: -1 })
-    .find()
-)
+interface LandingBlogItem {
+  slug: string
+  title: string
+  date: string
+  description: string
+  tags: string[]
+}
+
+// Fetch recent 4 blog posts
+const { data: posts } = await useFetch<LandingBlogItem[]>('/api/blog?limit=4')
 
 // Recent posts for tilted cards
 const recentPosts = computed(() => {
   if (!posts.value) return []
-  return posts.value.slice(0, 4).map((p) => ({
+  return posts.value.map((p) => ({
     title: p.title || '',
-    slug: p._path.replace(/^\/blog\//, '').toLowerCase(),
+    slug: p.slug,
     date: formatShortDate(p.date || ''),
     description: p.description,
   }))
@@ -58,7 +56,7 @@ useSeoMeta({
 }
 
 .landing-page > section {
-  padding-left: max(1.5rem, calc((100% - 820px) / 2));
-  padding-right: max(1.5rem, calc((100% - 820px) / 2));
+  padding-left: max(1.5rem, calc((100% - 960px) / 2));
+  padding-right: max(1.5rem, calc((100% - 960px) / 2));
 }
 </style>

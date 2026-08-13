@@ -1,27 +1,32 @@
-import { readdir } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { query as dbQuery } from '~~/server/utils/db'
+import type { RowDataPacket } from 'mysql2/promise'
+
+interface FragmentRow extends RowDataPacket {
+  slug: string
+  title: string
+  date: string
+  year: number
+  filename: string
+}
 
 export default defineEventHandler(async () => {
-  const dir = resolve(process.cwd(), 'public/fragments')
-  let files: string[] = []
-  try {
-    files = await readdir(dir)
-  } catch {
-    return []
-  }
+  // Ensure tables exist (idempotent)
+  const { ensureTables } = await import('~~/server/utils/db')
+  await ensureTables()
 
-  const htmlFiles = files
-    .filter((f) => f.endsWith('.html'))
-    .map((f) => {
-      const name = f.replace(/\.html$/, '')
-      // Filename format: YYYY-MM-DD-title
-      const dateMatch = name.match(/^(\d{4}-\d{2}-\d{2})-(.+)$/)
-      const date = dateMatch ? dateMatch[1] : ''
-      const year = date ? parseInt(date.slice(0, 4)) : 0
-      const title = dateMatch ? dateMatch[2].replace(/-/g, ' ') : name
-      return { title, date, year, filename: f, slug: name }
-    })
-    .sort((a, b) => b.date.localeCompare(a.date))
+  const rows = await dbQuery<FragmentRow[]>(
+    'SELECT slug, title, date FROM fragments ORDER BY date DESC'
+  )
 
-  return htmlFiles
+  return rows.map((row) => {
+    const date = row.date ? new Date(row.date).toISOString().slice(0, 10) : ''
+    const year = date ? parseInt(date.slice(0, 4)) : 0
+    return {
+      title: row.title,
+      date,
+      year,
+      filename: `${row.slug}.html`,
+      slug: row.slug,
+    }
+  })
 })

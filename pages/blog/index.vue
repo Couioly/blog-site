@@ -125,29 +125,26 @@ useSeoMeta({
 
 const showFull = ref(false)
 
-// Fetch all posts
-const { data: posts } = await useAsyncData('blog-posts', () =>
-  queryContent<{
-    title: string
-    date: string
-    description?: string
-    tags?: string[]
-    _path: string
-  }>('/blog')
-    .sort({ date: -1 })
-    .find()
-)
+interface BlogListItem {
+  slug: string
+  title: string
+  date: string
+  description: string
+  tags: string[]
+}
+
+// Fetch all posts from DB
+const { data: posts } = await useFetch<BlogListItem[]>('/api/blog')
 
 // Build post meta list
 const postMetas = computed<PostMeta[]>(() => {
   if (!posts.value) return []
   return posts.value.map((p) => {
-    const slug = p._path.replace(/^\/blog\//, '').toLowerCase()
     const d = new Date(p.date || '')
     return {
-      title: p.title || slug,
+      title: p.title || p.slug,
       date: p.date || '',
-      slug,
+      slug: p.slug,
       description: p.description,
       tags: p.tags,
       year: d.getFullYear() || new Date().getFullYear(),

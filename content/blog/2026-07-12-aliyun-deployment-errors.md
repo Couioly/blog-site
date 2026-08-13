@@ -70,7 +70,7 @@ Get "https://registry-1.docker.io/v2/": net/http: request canceled while
 waiting for connection (Client.Timeout exceeded while awaiting headers)
 ```
 
-原因：国内网络无法直接访问 Docker Hub（`registry-1.docker.io`），GFW 阻断。
+原因：国内网络无法直接访问 Docker Hub（`registry-1.docker.io`），该服务服务器部署于境外，中国大陆常规家用网络无法直接访问。
 
 解决：配置阿里云专属镜像加速器（ECS 同机房内网拉取最快）：
 

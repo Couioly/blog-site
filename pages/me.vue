@@ -1,48 +1,29 @@
 <template>
   <div class="me-page">
-    <div class="me-avatar">
-      <img src="/img-me.png" alt="头像" />
-    </div>
-    <h1 class="me-nickname">姜玖儿</h1>
-    <p class="me-bio">喜欢前沿技术，热爱分享知识</p>
-    <p class="me-signature">— Exploring the intersection of code and curiosity —</p>
-
-    <div class="me-social">
-      <a href="https://github.com/Couioly" target="_blank" rel="noopener" title="GitHub">
-        <img src="/github.svg" alt="GitHub" />
-      </a>
-      <a href="https://gitee.com/Couioly" target="_blank" rel="noopener" title="Gitee">
-        <img src="/gitee.svg" alt="Gitee" />
-      </a>
-      <a href="https://blog.csdn.net/2401_86544210" target="_blank" rel="noopener" title="CSDN">
-        <img src="/csdn.svg" alt="CSDN" />
-      </a>
-      <a href="https://space.bilibili.com/3707030822980416" target="_blank" rel="noopener" title="Bilibili">
-        <img src="/bilibili.svg" alt="Bilibili" />
-      </a>
-      <span class="social-btn" title="公众号" @click.stop="showQr('gzh', $event)">
-        <img src="/公众号.svg" alt="公众号" />
-      </span>
-      <span class="social-btn" title="微信" @click.stop="showQr('weixin', $event)">
-        <img src="/微信.svg" alt="微信" />
-      </span>
-      <span class="social-btn" title="QQ" @click.stop="showQr('qq', $event)">
-        <img src="/QQ.svg" alt="QQ" />
-      </span>
-    </div>
-
-    <!-- QR Popup -->
-    <Teleport to="body">
-      <div
-        v-if="qr.show"
-        class="qr-popup"
-        :style="{ left: qr.x + 'px', top: qr.y + 'px' }"
-        @click.stop
-      >
-        <img :src="qr.src" :alt="qr.alt" />
+    <!-- ===== Top: Avatar + Info ===== -->
+    <div class="me-top">
+      <div class="me-avatar" />
+      <div class="me-info">
+        <h1 class="me-nickname">JunbX工作室</h1>
+        <p class="me-bio"><img src="/签名.svg" alt="" class="me-inline-icon" /> 喜欢前沿技术，热爱分享知识</p>
+        <p class="me-signature">— Exploring the intersection of code and curiosity —</p>
       </div>
-      <div v-if="qr.show" class="qr-backdrop" @click="qr.show = false" />
-    </Teleport>
+    </div>
+
+    <!-- ===== Bottom: Changelog Timeline ===== -->
+    <div class="me-changelog">
+      <h2 class="changelog-title"><img src="/日志查询.svg" alt="" class="me-inline-icon" /> 网站日志</h2>
+
+      <div class="timeline">
+        <div v-for="(item, i) in changelog" :key="i" class="timeline-item">
+          <div class="timeline-dot" />
+          <div class="timeline-content">
+            <span class="timeline-date"><img src="/日志记录.svg" alt="" class="me-inline-icon" /> {{ item.date }}</span>
+            <span class="timeline-text">{{ item.text }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -54,138 +35,197 @@ useSeoMeta({
   twitterCard: 'summary',
 })
 
-const qr = reactive({
-  show: false,
-  src: '',
-  alt: '',
-  x: 0,
-  y: 0,
-})
-
-function showQr(type: string, e: MouseEvent) {
-  if (qr.show && qr.alt === type) {
-    qr.show = false
-    return
-  }
-  qr.alt = type
-  qr.src = type === 'weixin' ? '/weixin.png' : type === 'qq' ? '/qq.png' : '/公众号.jpg'
-  qr.x = e.clientX - 100
-  qr.y = e.clientY - 200
-  qr.show = true
+interface ChangelogItem {
+  date: string
+  text: string
 }
+
+const changelog: ChangelogItem[] = [
+  { date: '2026-08-05', text: '新增书架模块，接入豆瓣读书，MySQL 动态管理' },
+  { date: '2026-08-04', text: '新增番剧书架，接入 Bangumi API，MySQL 动态管理' },
+  { date: '2026-08-03', text: '看板娘 Laffey 接入 DeepSeek AI，支持流式对话' },
+  { date: '2026-08-01', text: '看板娘全新人设上线，Laffey 正式入驻' },
+  { date: '2026-07-31', text: '新增看板娘、备案号、最新笔记模块' },
+  { date: '2026-07-22', text: '新增多篇技术博客和片段内容' },
+  { date: '2026-07-20', text: '博客主题重构，采用 Softly 设计风格' },
+  { date: '2026-07-10', text: '改进搜索功能，优化搜索体验' },
+  { date: '2026-07-06', text: '新增 LangChain 系列博客文章' },
+  { date: '2026-07-02', text: '新增片段（Fragments）功能模块' },
+  { date: '2026-06-14', text: '博客框架搭建完成，首批文章上线' },
+]
 </script>
 
 <style scoped>
 .me-page {
-  text-align: center;
-  padding: 5rem 1rem 3rem;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 3rem;
+}
+
+/* ===== Top Section ===== */
+.me-top {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 .me-avatar {
-  width: 130px;
-  height: 130px;
-  border-radius: 2rem;
-  overflow: hidden;
-  margin: 0 auto 1.75rem;
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 1.5rem;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
   border: 3px solid #fff;
+  background-image: url('/img-me.png');
+  background-size: cover;
+  background-position: center 65%;
 }
 
-.me-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  margin: 0;
-  border-radius: 0;
+.me-info {
+  flex: 1;
 }
 
 .me-nickname {
   font-family: 'Outfit', sans-serif;
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: 600;
   letter-spacing: -0.025em;
-  color: #292524;
-  margin: 0 0 0.75rem;
+  color: var(--text);
+  margin: 0 0 0.4rem;
   border: none;
   padding: 0;
 }
 
 .me-bio {
-  font-family: 'Outfit', sans-serif;
-  color: #78716C;
-  font-size: 1.05rem;
-  max-width: 380px;
-  margin: 0 auto 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin: 0 0 0.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.me-inline-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  vertical-align: middle;
 }
 
 .me-signature {
   font-family: 'Reenie Beanie', cursive;
-  font-size: 1.4rem;
-  color: #A8A29E;
-  margin: 0.25rem 0 1.75rem;
+  font-size: 1.2rem;
+  color: var(--border-strong);
+  margin: 0;
 }
 
-.me-social {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 0.5rem;
-  flex-wrap: wrap;
+/* ===== Changelog ===== */
+.me-changelog {
+  border-top: 1px solid var(--border-light);
+  padding-top: 2rem;
 }
 
-.me-social a,
-.social-btn {
+.changelog-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 1.5rem;
+  border: none;
+  padding: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border: 1px solid #E7E5E4;
-  border-radius: 1rem;
-  background: #fff;
-  opacity: 0.7;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  cursor: pointer;
+  gap: 0.4rem;
 }
 
-.me-social a:hover,
-.social-btn:hover {
-  opacity: 1;
-  border-color: #FFB7B2;
-  box-shadow: 0 4px 20px -2px rgba(255, 183, 178, 0.3);
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 1.5rem;
 }
 
-.me-social img {
-  width: 24px;
-  height: 24px;
-  margin: 0;
-  display: block;
-}
-</style>
-
-<style>
-.qr-popup {
-  position: fixed;
-  z-index: 9999;
-  background: #fff;
-  border-radius: 1rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-  padding: 0.75rem;
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.75rem;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--border);
 }
 
-.qr-popup img {
-  width: 180px;
-  height: 180px;
-  display: block;
-  border-radius: 0.5rem;
-  margin: 0;
+.timeline-item {
+  position: relative;
+  padding-bottom: 1.25rem;
 }
 
-.qr-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 9998;
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -0.75rem;
+  top: 6px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  border: 2px solid var(--bg);
+  transform: translateX(-50%);
+}
+
+.timeline-item:first-child .timeline-dot {
+  background: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255, 183, 178, 0.25);
+}
+
+.timeline-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-left: 1.75rem;
+}
+
+.timeline-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: 'Outfit', sans-serif;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.timeline-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+@media (max-width: 480px) {
+  .me-top {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .me-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .timeline-content {
+    flex-direction: column;
+    gap: 0.15rem;
+  }
 }
 </style>

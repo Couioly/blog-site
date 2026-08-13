@@ -16,7 +16,7 @@
     </header>
 
     <div class="article-body prose">
-      <ContentRenderer v-if="post" :value="post" />
+      <div v-if="post" v-html="post.html" />
       <p v-else>文章未找到</p>
     </div>
 
@@ -27,16 +27,23 @@
 </template>
 
 <script setup lang="ts">
+interface BlogDetail {
+  slug: string
+  title: string
+  date: string
+  description: string
+  tags: string[]
+  html: string
+}
+
 const route = useRoute()
 const slug = (route.params.slug as string[]).join('/')
 
-const { data: post } = await useAsyncData(`post-${slug}`, () =>
-  queryContent(`/blog/${slug}`).findOne()
-)
+const { data: post } = await useFetch<BlogDetail>(`/api/blog/${slug}`)
 
 const formattedDate = computed(() => {
   if (!post.value?.date) return ''
-  const d = new Date(post.value.date as string)
+  const d = new Date(post.value.date)
   return d.toLocaleDateString('zh-CN', {
     year: 'numeric',
     month: 'long',
@@ -45,16 +52,14 @@ const formattedDate = computed(() => {
 })
 
 const tags = computed(() => {
-  const t = post.value?.tags
-  if (!t) return []
-  return Array.isArray(t) ? t : [t]
+  return post.value?.tags || []
 })
 
 useSeoMeta({
   title: () => post.value?.title || '文章',
   ogTitle: () => post.value?.title || '文章',
-  description: () => (post.value?.description as string) || '',
-  ogDescription: () => (post.value?.description as string) || '',
+  description: () => post.value?.description || '',
+  ogDescription: () => post.value?.description || '',
   ogType: 'article',
   twitterCard: 'summary',
 })

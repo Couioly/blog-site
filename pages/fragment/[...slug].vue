@@ -48,7 +48,7 @@
 const route = useRoute()
 const slug = (route.params.slug as string[]).join('/')
 
-const { data: html, pending: loading, error } = await useFetch(`/fragments/${slug}.html`, {
+const { data: html, pending: loading, error } = await useFetch(`/api/fragments/${slug}`, {
   parseResponse: (r) => r,
 })
 
